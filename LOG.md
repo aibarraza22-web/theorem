@@ -147,3 +147,96 @@ variables in Lemmas 2 and 3 is valid. Added a sentence making this explicit.
 novelty is a *fresh foundation* (integral geometry over the rotation group +
 pure symmetry), not a new rearrangement of an old figure. See the Novelty Claim
 in `FINAL_PROOF.md`.
+
+---
+---
+
+# PROJECT 2 — Search-first novelty attempt (supersedes Project 1's novelty claim)
+
+A second, stricter pass. The brief: treat **novelty as the hard part**, earn every
+claim against the literature, and accept that a well-documented **negative result**
+is a success. Crucially, it flags that Project 1's integral-geometry proof
+**accidentally rediscovered Cauchy/Crofton integral geometry** — now an exhausted
+foundation. Project 1's files are archived under `proof/ARCHIVE_project1_*` and its
+novelty claim is retracted to "route-level at best."
+
+## P2 · Entry 0 — Phase 0 tooling check (HONEST)
+
+Actually tested, not assumed:
+- **Web search: YES** — works (returned live results incl. 2025 arXiv papers).
+- **WebFetch: YES** — available.
+- **SymPy: YES** — `sympy 1.14.0`, runs (executed `verify/lie_generator_check.py`).
+- **Lean/lake/elan: NO** — none installed (`command -v` all empty). Therefore the
+  Lean file is labeled **NOT COMPILED** and claimed to pass *nothing*. (Project 1's
+  README said "written, not built"; I am keeping that and making it louder, to avoid
+  the contradiction the brief warns about.)
+
+Novelty-confidence ceiling is NOT capped by tooling (web search works), but IS
+capped by what the searches found.
+
+## P2 · Entry 1 — Candidates (see `candidates.md`)
+
+Generated 9 routes, biased off the exhausted list. Killed on sight: tropical
+(C6, no honest meaning — degenerates to `max(a,b)`), p-adic (C7, ultrametric, no
+Euclidean content), heat-kernel isotropy (C8, circular — isotropy = the conclusion),
+projection-theorem/KKT (C9, = Hilbert projection, known). Survivors to gauntlet:
+C1 SO(2)-invariant form, C2 skew generator, C3 entropy power inequality, C4
+information geometry, C5 area functional equation.
+
+## P2 · Entry 2 — Prior-art gauntlet (see `prior_art.md`) — the decisive step
+
+Ran real web searches (queries + URLs logged in `prior_art.md`). Results:
+- **C1 → KNOWN.** Schur/representation-theory: the `SO(2)`-invariant symmetric form
+  is unique up to scale = the dot product. Textbook.
+- **C3 → KNOWN.** "In 1-D the EPI reduces to additivity of variances" — i.e. core
+  (C), already exhausted.
+- **C4 → KNOWN + circular.** Amari: squared Euclidean distance is the *base example*
+  the generalized (Bregman) Pythagorean theorem generalizes; it presupposes the
+  Euclidean case.
+- **C5 → KNOWN.** Core (A); and area-additivity on the needed dissections is
+  *harder than Pythagoras itself* (cited obstruction).
+- **C2 → PARTIAL (route only).** No write-up found proving the *planar* theorem via
+  the skew rotation generator, BUT every ingredient (skew-adjoint isometry algebra,
+  `J²=−I`, invariant-form uniqueness) is standard and trivially adaptable.
+
+**Conclusion of the gauntlet:** every fresh-sounding foundation collapses onto core
+(A)/(B)/(C) or is circular. Only C2 survives, and only as exposition.
+
+## P2 · Entry 3 — Dead ends (candid)
+
+- *Hoping EPI would be "more than" variance additivity:* it isn't, in the 1-D case
+  that maps to the plane. Dead end.
+- *Hoping information geometry gives an independent Euclidean proof:* it can't — the
+  Euclidean case is its definitional seed. Dead end (circular).
+- *Hoping the skew-generator route would be a new FOUNDATION:* it is core (C); the
+  substantive proportionality step (P5) is the same invariant-form content as
+  Project 1 and the inner-product proofs. I could not de-circularize the
+  proportionality without re-importing averaging/projection. So C2's genuine delta
+  shrank to "orthogonality via Lie-skewness instead of reflection symmetry" — thin.
+
+## P2 · Entry 4 — Construction + verification
+
+Built C2 fully and rigorously in `proof/FINAL_PROOF.md` (axioms, Lemmas 1–2,
+theorem, figure, circularity audit). Verified in `verify/lie_generator_check.py`:
+symbolic (exact) + numeric (5.5e-16 on 100k random instances) — **PASS** (real
+output pasted in `verify/README.md`). Lean sketch updated with a `skew_orthogonal`
+lemma but **NOT COMPILED**.
+
+## P2 · Entry 5 — Referee + verdict (see `NOVELTY.md`)
+
+Referee argued "this is just the inner-product proof; (P5) IS the theorem and
+`B(u,Ju)=0` is `u·Ju=0`." **The referee is right**, and the verdict concedes it.
+
+**FINAL VERDICT (Project 2): NOT NOVEL (foundationally).** The proof reduces to core
+(C); its substance (P5) is known integral-geometry/inner-product content; its only
+non-standard element is a coordinate-free *exposition* of orthogonality via the skew
+generator — **PLAUSIBLY NOVEL only as a route, confidence LOW**. Closest prior art:
+Schur uniqueness of the `SO(2)`-invariant form + skew-adjointness of the isometry
+Lie algebra + Project 1's averaged-projection construction. Unchecked risk: a
+textbook may already present the skew-generator packaging as folklore (would harden
+the negative verdict).
+
+**Meta-lesson:** the honest, defensible deliverable here is the *negative result and
+its audit trail* — a map of why five candidate foundations are each KNOWN, circular,
+or meaningless — not a manufactured novelty claim. This is recorded as a success per
+the project's own framing.

@@ -1,6 +1,18 @@
 /-
+  ==========================================================================
+  STATUS: NOT COMPILED. No Lean/lake/elan toolchain exists in this environment
+  (verified in Phase 0; see LOG.md). This file is a SKETCH written against
+  current mathlib API and was NOT machine-checked. Do not read any "pass" into it.
+  ==========================================================================
+
   Formal verification (Lean 4 / mathlib) of the CORE STEP of the proof in
   proof/FINAL_PROOF.md.
+
+  Covers BOTH Project 1 (orthogonality by reflection symmetry) and Project 2
+  (orthogonality by the skew generator J): in either case the abstract endpoint
+  is the same, < u, v > = 0  =>  ||u+v||^2 = ||u||^2 + ||v||^2. A `skew_orthogonal`
+  lemma below also captures Project 2's Lemma 2 (B(u, Ju) = 0 from skew-adjointness)
+  at the abstract inner-product level.
 
   SCOPE (read this honestly):
   ---------------------------------------------------------------------------
@@ -62,3 +74,15 @@ example (a b : ℝ) :
   have h : ⟪u, v⟫_ℝ = 0 := by
     simp [u, v, EuclideanSpace.inner_eq, Fin.sum_univ_two]
   exact pythagoras_core u v h
+
+/-- Project 2, Lemma 2 at the abstract level: if a linear map `J` is skew-adjoint
+for the inner product (`⟪J u, w⟫ + ⟪u, J w⟫ = 0`), then every vector is orthogonal
+to its image `J u`. With `J` the right-angle rotation this is "perpendicular legs
+are inner-product-orthogonal," obtained from skewness alone — no coordinates.
+(SKETCH, NOT COMPILED.) -/
+theorem skew_orthogonal (J : E →ₗ[ℝ] E)
+    (hskew : ∀ x w : E, ⟪J x, w⟫_ℝ + ⟪x, J w⟫_ℝ = 0) (u : E) :
+    ⟪u, J u⟫_ℝ = 0 := by
+  have h := hskew u u                      -- ⟪J u, u⟫ + ⟪u, J u⟫ = 0
+  rw [real_inner_comm (J u) u] at h        -- ⟪u, J u⟫ + ⟪u, J u⟫ = 0
+  linarith

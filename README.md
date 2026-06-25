@@ -1,8 +1,40 @@
-# An Original Proof of the Pythagorean Theorem from First Principles
+# A Genuinely Novel Proof of the Pythagorean Theorem — research repo
+
+This repo holds **two passes** at the same goal.
+
+## Project 2 (current, search-first) — honest verdict: **NOT NOVEL**
+
+A stricter, search-first attempt that treats novelty as the hard part and accepts a
+documented negative as success. New files:
+`candidates.md`, `prior_art.md`, `NOVELTY.md`, `proof/FINAL_PROOF.md` (rewritten),
+`verify/lie_generator_check.py`, and the Project 2 sections of `LOG.md` and
+`verify/README.md`.
+
+- **Phase 0 tooling (honest):** web search ✅, SymPy ✅ (1.14, runs), Lean ❌ (no
+  toolchain → Lean file is **NOT COMPILED**).
+- **Gauntlet result:** five candidate foundations (SO(2)-invariant form, entropy
+  power inequality, information geometry, area functional equation, skew generator)
+  were each searched; all are **KNOWN / circular / route-only**. See `prior_art.md`.
+- **Best survivor:** the skew-infinitesimal-generator proof (`proof/FINAL_PROOF.md`)
+  — rigorous and non-circular, verified by SymPy (exact) + numeric (5.5e-16), but
+  honestly **core (C)**: orthogonality via `J²=−I` and skew-adjointness
+  (`B(u,Ju)=0`). **Verdict: NOT NOVEL foundationally; plausibly novel only as an
+  exposition/route, confidence LOW.**
+- Project 1's integral-geometry proof is **archived** (`proof/ARCHIVE_project1_*`)
+  and its novelty claim is **retracted** — it rediscovered Cauchy/Crofton integral
+  geometry.
+
+The valuable deliverable is the **negative result with its audit trail**:
+`NOVELTY.md` (ledger + skeptical referee) and `prior_art.md` (queries + URLs).
+
+---
+
+## Project 1 (archived) — original survey + integral-geometry proof
 
 A research project that (1) surveys the full landscape of known proofs and the
-mathematical fields the theorem touches, then (2) constructs and rigorously
-verifies a **new** proof that is not a re-skin of an existing one.
+mathematical fields the theorem touches, then (2) constructs and verifies a proof
+on an integral-geometry foundation. **Superseded:** Project 2 shows that foundation
+is not new ground. The survey files (`research/`) remain useful background.
 
 ## The new proof in one paragraph
 

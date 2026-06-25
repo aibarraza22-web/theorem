@@ -1,7 +1,41 @@
-# Verification — Phase 6
+# Verification
 
-Three independent checks of `proof/FINAL_PROOF.md`. The proof itself uses **no
-coordinates**; these checks introduce coordinates purely as a measuring/sanity
+> **Project 2 (current `proof/FINAL_PROOF.md` — skew-generator proof):** see the
+> "Project 2 verification" section at the bottom. The checks below the line are
+> from Project 1 (archived integral-geometry proof) and still run/pass.
+
+---
+
+## Project 2 verification — `lie_generator_check.py` (SymPy + numeric)  ✅ PASS
+
+Run: `python3 verify/lie_generator_check.py`. Real output (2026-06-25):
+
+```
+Solving skew-invariance for the form entries: [{b12: 0, b22: b11}]
+=> invariant B = Matrix([[b11, 0], [0, b11]])  (a positive multiple of the identity)
+(1) B(u, Ju) = 0  ->  PASS
+(2) Q(u+v) - [Q(u)+Q(v)] for v=lambda*Ju: 0  ->  PASS
+Q(u) = b11*(ux**2 + uy**2)   => c0 = b11 > 0, Q = c0 * L^2.
+max relative error of Q(u+v) - (Q(u)+Q(v)) over 100000 instances: 5.547e-16  -> PASS
+=== SKEW-GENERATOR CHECKS: PASS ===
+```
+
+This confirms, from skew-invariance `JᵀB + BJ = 0` **alone** (B abstract):
+the invariant form is forced to `b₁₁·I` (Schur uniqueness, the textbook backbone of
+axiom P5); `B(u,Ju)=0` (Lemma 2, exact); `Q(u+v)=Q(u)+Q(v)` for `v=λJu` (the
+theorem, exact); and numeric sanity on 100,000 random right triangles to ~5.5e-16.
+
+**Lean (`lean/Pythagoras.lean`): NOT COMPILED.** No Lean/lake/elan toolchain exists
+in this environment (Phase 0). The file is a sketch (now including a
+`skew_orthogonal` lemma for Project 2's Lemma 2) written against current mathlib
+API; it was **not** machine-checked and nothing should be read as passing.
+
+---
+
+## Project 1 verification (archived proof) — still runs
+
+Three independent checks of the archived integral-geometry proof. That proof uses
+**no coordinates**; these checks introduce coordinates purely as a measuring/sanity
 device.
 
 ## 1. Symbolic check — `symbolic_check.py` (SymPy)  ✅ PASS

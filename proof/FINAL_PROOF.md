@@ -1,367 +1,239 @@
-# An Original Proof of the Pythagorean Theorem
-## via Mean Squared Projection over the Rotation Group
+# Pythagoras via the Skew Infinitesimal Generator of Rotation
+## (Project 2 — search-first; honest verdict at the end)
 
-*A proof from the foundation of integral geometry, using only linearity of
-orthogonal projection and the symmetry of an integral over the circle of
-directions — no coordinates, no inner-product formula, no trigonometric
-identity.*
+> **Read the verdict first (§7).** This is a *complete and non-circular* proof, but
+> its novelty is deliberately capped. The prior-art gauntlet (`prior_art.md`) shows
+> its substance is known. What follows is the best-constructed survivor (candidate
+> **C2**), presented rigorously, with an explicit accounting of which step is new
+> (thin) and which is borrowed.
 
 ---
 
 ## 0. Accepted starting facts (axioms)
 
-We work in the Euclidean plane `E` as governed by the classical congruence and
-similarity axioms (Hilbert's groups of axioms, equivalently the synthetic content
-of Euclid Books I and VI **excluding** Proposition I.47 and its consequences). We
-make the following explicit, and **nothing else**:
+Work in the Euclidean plane as a 2-dimensional real vector space with a fixed
+origin `O`. We accept exactly:
 
-- **(P1) Vectors and affine structure.** Points of `E` form a 2-dimensional real
-  affine space; fixing an origin `O`, displacements are vectors that can be added
-  and scaled by real numbers. *(Affine geometry — no metric.)*
+- **(P1)** *(Linear structure.)* Vectors add and scale over `ℝ`; `dim = 2`.
 
-- **(P2) Length.** There is a function `L` assigning to each vector a nonnegative
-  real number, its **length**, such that:
-  - (P2a) `L(u) = 0` iff `u = 0`;
-  - (P2b) **homogeneity:** `L(λu) = |λ| · L(u)` for all real `λ`
-    *(a homothety with ratio `λ` scales lengths by `|λ|` — a similarity axiom);*
-  - (P2c) `L` is invariant under all rigid motions (translations, rotations,
-    reflections). *(Congruent segments have equal length.)*
-  We do **not** assume any formula for `L` in coordinates.
+- **(P2)** *(Rotations and the generator `J`.)* Rotations about `O` form a
+  one-parameter group `{ρ_t}` of **linear** maps. Let `J := ρ_{90°}` be rotation by
+  a right angle. Rotating by `90°` twice is rotation by `180°`, which is the
+  **central inversion** `x ↦ −x`. Hence
+  ```
+  J^2 = −I.
+  ```
+  *(This is a congruence fact — "two right-angle turns is a half-turn is the
+  point-reflection through `O`" — and uses no length formula.)*
 
-- **(P3) Rigid motions.** The plane admits **rotations** `ρ_α` (about `O`, by any
-  angle `α`) and **reflections** `σ_ℓ` (across any line `ℓ` through `O`). These are
-  linear maps preserving `L` (by P2c), they preserve the relation "right angle,"
-  and they act on the set of **directions** (unit-direction lines through `O`).
+- **(P3)** *(Length.)* There is a length function `L` on vectors with `L(u)=0 ⇔
+  u=0`, homogeneity `L(λu)=|λ|L(u)`, and invariance under all rigid motions
+  (rotations and reflections). No coordinate formula for `L` is assumed.
 
-- **(P4) Right angle / orthogonality.** Two nonzero vectors `u, v` are
-  **perpendicular**, written `u ⟂ v`, when the angle between them is a right angle
-  (the congruence-defined right angle of Euclidean geometry). The reflection
-  `σ_u` across the line spanned by `u` **fixes `u`** and **negates every vector
-  perpendicular to that line**. *(This is the defining behavior of a plane
-  reflection; it does not use any length formula.)*
+- **(P4)** *(Perpendicularity via the right-angle rotation.)* Two nonzero vectors
+  are **perpendicular**, `u ⟂ v`, exactly when `v` is parallel to `Ju`, i.e.
+  `v = λ·Ju` for some scalar `λ ≠ 0`. *(This is the definition of "right angle" in
+  terms of the congruence `J`; it does not presuppose any metric formula. It agrees
+  with the Euclidean right angle because `J` is the congruence that turns a
+  direction into the perpendicular one.)*
 
-- **(P5) Orthogonal projection.** For each direction `θ` there is a map
-  `π_θ : E → ℓ_θ` onto the line `ℓ_θ` of direction `θ`, the **orthogonal
-  projection**, characterized by `u − π_θ(u) ⟂ ℓ_θ`. Orthogonal projection onto a
-  line through `O` is a **linear** map. *(Standard affine/Euclidean fact: the foot
-  of the perpendicular depends linearly on the point. Proof of linearity uses only
-  that perpendicularity is preserved under translation and that the projection of a
-  sum is the sum of projections — see Lemma 0.)*
+- **(P5)** *(Proportionality input — BORROWED, see the honesty note.)* Squared
+  measured length is a **rotation-invariant quadratic form**: there is a symmetric
+  bilinear form `B` and a constant `c₀ > 0` with
+  ```
+  B(u,u) = c₀ · L(u)^2   for all u,     and   B(ρ_t u, ρ_t v) = B(u,v)  for all t.
+  ```
 
-- **(P6) Directions and their measure.** The set of directions is the circle
-  `S = ℝ / 2πℤ` parameterized by the angle `θ`, carrying the rotation-invariant
-  arc-length measure `dθ` of total mass `2π`. Rotations act on `S` by
-  `θ ↦ θ + α` and the reflection `σ_ℓ` (axis at angle `β`) acts by
-  `θ ↦ 2β − θ`; **both are measure-preserving bijections of `S`.**
-
-These axioms are about congruence, similarity, affine structure, and the measure
-on directions. **None of them mentions the coordinate distance formula
-`√(x²+y²)`, the coordinate inner product, or the identity `sin²+cos²=1`.** The
-Circularity Audit (§6) confirms this.
+**Honesty note on (P5).** (P5) is the genuine content of the Pythagorean theorem
+("the measured metric comes from a rotation-invariant inner product"), and it is
+**not new**. It is established by the integral-geometry construction of Project 1
+(archived as `proof/ARCHIVE_project1_integral_geometry.md`): set
+`B(u,v) = ∫₀^{2π} p_θ(u)\,p_θ(v)\,dθ` with `p_θ` the signed projection onto
+direction `θ`; that `B` is bilinear and rotation-invariant, and `B(u,u)=π·L(u)^2`
+by rotation invariance + quadratic homogeneity (so `c₀=π`). Equivalently, average
+any positive-definite seed form over `{ρ_t}` (the Weyl/Hurwitz trick). We **import**
+(P5) rather than re-derive it, and we **do not claim it as novel** — it is exactly
+the known integral-geometry / inner-product core. This proof's only non-standard
+move is the *orthogonality* step below.
 
 ---
 
-## 1. The signed projection functional
+## 1. The rotation generator is skew with respect to `B`
 
-**Definition 1 (signed projection).** Fix a direction `θ` and a unit vector
-`e_θ` along `ℓ_θ` (choose one of the two orientations; the choice will not matter
-because every quantity below is a product of two projections or a square). For a
-vector `u`, the orthogonal projection `π_θ(u)` is a multiple of `e_θ`; define the
-**signed projection**
-```
-p_θ(u)  :=  the real number t such that  π_θ(u) = t · e_θ .
-```
-So `|p_θ(u)| = L(π_θ(u))` is the length of the shadow of `u` on `ℓ_θ`, with a
-sign recording on which side of `O` the shadow falls.
+**Lemma 1.** `B(Ju, v) + B(u, Jv) = 0` for all `u, v`.
 
-**Lemma 0 (linearity of `p_θ`).** For all vectors `u, v` and scalars `λ`,
+*Proof.* By (P5), `B` is invariant under every rotation `ρ_t`: `B(ρ_t u, ρ_t v) =
+B(u,v)`. The family `t ↦ B(ρ_t u, ρ_t v)` is therefore constant in `t`. Differentiate
+at `t=0`. Writing `G` for the infinitesimal generator (`d/dt ρ_t |_{t=0} = G`, so
+`ρ_t = exp(tG)`), the product rule gives
 ```
-p_θ(u + v) = p_θ(u) + p_θ(v),     p_θ(λu) = λ · p_θ(u).
+0 = d/dt B(ρ_t u, ρ_t v)|_{t=0} = B(Gu, v) + B(u, Gv).
 ```
-*Proof.* By (P5) `π_θ` is linear, and `t ↦ t·e_θ` is a linear isomorphism of `ℓ_θ`
-with `ℝ`; `p_θ` is the composition of `π_θ` with its inverse, hence linear. (Concretely:
-`π_θ(u+v) − π_θ(u) − π_θ(v)` lies on `ℓ_θ`, while `(u+v)−u−v = 0` is perpendicular
-to nothing/everything; uniqueness of the perpendicular foot forces the difference
-to be `0`. Scalar homogeneity is identical.) ∎
+The generator `G` and the right-angle rotation `J` are the same one-parameter
+group's infinitesimal and finite members; both are skew for `B` (the displayed
+identity holds with `G`, and `J = ρ_{90°}` is in the group, so conjugation/invariance
+by `J` likewise gives `B(Ju,Jv)=B(u,v)`; combined with `J^2=−I` this yields the
+same skew relation for `J`). Concretely, from `B(Ju,Jv)=B(u,v)` apply it to
+`(u, Jv)`: `B(Ju, J(Jv)) = B(u, Jv)`, i.e. `B(Ju, −v) = B(u,Jv)` using `J^2=−I`,
+so `−B(Ju,v) = B(u,Jv)`, which is the claim. ∎
 
-Note `p_θ` uses only the **direction** `θ` and the Euclidean notions of
-perpendicular foot and signed position on a line (a ruler with an order). It does
-**not** use coordinates of `u` or any distance formula.
+*(The middle paragraph is only to connect the finite map `J` to the skew relation;
+the clean one-liner is the last sentence: `J^2=−I` plus `J`-invariance of `B` gives
+`B(Ju,v) = −B(u,Jv)`.)*
+
+**Lemma 2 (orthogonality for free).** `B(u, Ju) = 0` for every `u`.
+
+*Proof.* Put `v = u` in Lemma 1: `B(Ju, u) + B(u, Ju) = 0`. Since `B` is symmetric,
+`B(Ju, u) = B(u, Ju)`, so `2·B(u, Ju) = 0`, giving `B(u, Ju) = 0`. ∎
+
+This is the heart of the route: **perpendicular vectors are `B`-orthogonal because
+the rotation generator is skew-adjoint.** No coordinates, no `sin²+cos²=1`, no trig
+identity — only `J^2=−I` and invariance of `B`.
 
 ---
 
-## 2. The averaged quadratic functional and bilinear pairing
+## 2. The theorem
 
-**Definition 2.** For vectors `u, v` define
-```
-Q(u)   :=  ∫_0^{2π} p_θ(u)^2  dθ           (the mean squared projection, ×2π)
-B(u,v) :=  ∫_0^{2π} p_θ(u) p_θ(v)  dθ .
-```
-The integrands are bounded continuous functions of `θ` (the projection of a fixed
-vector varies continuously with the direction), so both integrals exist.
+**Theorem (Pythagoras).** Let `△OAB` have its right angle at `O`. Set
+`u = OA`, `v = OB` with `u ⟂ v`, and `a = L(u)`, `b = L(v)`, `c = L(AB)`. Then
+`a² + b² = c²`.
 
-**Lemma 1 (B is a symmetric bilinear form, Q its diagonal).**
-`B(u,v) = B(v,u)`, `B` is linear in each argument, and `Q(u) = B(u,u)`.
-Consequently the **polarization identity** holds:
+*Proof.* By (P4), `v = λ·Ju` for some scalar `λ`. Write `Q(x) := B(x,x) = c₀ L(x)²`
+(by (P5)). The hypotenuse is `AB = v − u`. Expanding the quadratic form by
+bilinearity (P5) and symmetry,
 ```
-Q(u + v) = Q(u) + 2 B(u,v) + Q(v),     Q(u − v) = Q(u) − 2 B(u,v) + Q(v).      (★)
+Q(v − u) = Q(v) − 2·B(u, v) + Q(u).
 ```
-*Proof.* Symmetry is clear from the symmetric integrand. For bilinearity, fix `v`
-and use Lemma 0 inside the integral:
-`B(u+u', v) = ∫ p_θ(u+u') p_θ(v) dθ = ∫ (p_θ(u)+p_θ(u')) p_θ(v) dθ
-= B(u,v) + B(u',v)`, and `B(λu, v) = ∫ λ p_θ(u) p_θ(v) dθ = λ B(u,v)`; linearity
-in the second slot follows by symmetry. Setting `v=u` gives `Q=B(u,u)`. Expanding
-`Q(u±v)=B(u±v, u±v)` by bilinearity gives (★). ∎
+The cross term: `B(u, v) = B(u, λ Ju) = λ·B(u, Ju) = 0` by Lemma 2. Hence
+```
+c₀ · c²  =  Q(v − u)  =  Q(u) + Q(v)  =  c₀ · a²  +  c₀ · b² .
+```
+Divide by `c₀ > 0`: `a² + b² = c²`. ∎
 
-This is the heart of the construction: **`B` is a genuine inner product on the
-plane, built not from coordinates but by integrating geometric projections over
-all directions.**
+*(Using the diagonal `u + v` instead of `v − u` gives the same result, since the
+cross term vanishes either way.)*
 
 ---
 
-## 3. Proportionality: `Q(u) = c0 · L(u)²`
-
-**Lemma 2.** There is a universal constant `c0 > 0` with
-```
-Q(u) = c0 · L(u)^2     for every vector u.
-```
-*Proof.* Two properties of `Q`:
-
-**(i) Quadratic homogeneity.** By Lemma 0, `p_θ(λu) = λ p_θ(u)`, so
-`Q(λu) = ∫ (λ p_θ(u))^2 dθ = λ^2 Q(u)` for every real `λ`.
-
-**(ii) Rotation invariance.** Let `ρ_α` be rotation by `α`. Projecting a rotated
-vector onto direction `θ` equals projecting the original vector onto the direction
-rotated back by `α`; in signed form,
-```
-p_θ(ρ_α u) = p_{θ−α}(u)
-```
-(because `ρ_α` is a length-preserving linear map carrying `ℓ_{θ−α}` to `ℓ_θ` and
-preserving perpendicular feet, by P3). Therefore, using the measure-invariance of
-`dθ` under the shift `θ ↦ θ − α` (P6),
-```
-Q(ρ_α u) = ∫_0^{2π} p_{θ−α}(u)^2 dθ = ∫_0^{2π} p_φ(u)^2 dφ = Q(u).
-```
-So `Q` is constant on each rotation-orbit.
-
-Now take any two vectors `u, w` with `L(u) = L(w) ≠ 0`. In the plane, two vectors
-of equal length are related by a single rotation about `O` (P3): `w = ρ_α u` for
-some `α`. By (ii), `Q(w) = Q(u)`. Hence **`Q(u)` depends only on `L(u)`**: there is
-a function `F` with `Q(u) = F(L(u))`. By (i),
-`F(|λ| L(u)) = Q(λu) = λ^2 Q(u) = λ^2 F(L(u))`; writing `ℓ = L(u)` and `λ = s/ℓ`
-for `s ≥ 0` gives `F(s) = (s/ℓ)^2 F(ℓ)`, i.e. `F(s) = c0 · s^2` with
-`c0 = F(1) = Q(e)` for any unit vector `e`.
-
-Finally `c0 > 0`: `Q(e) = ∫ p_θ(e)^2 dθ` is the integral of a nonnegative
-continuous function that is not identically zero — at the direction `θ` aligned
-with `e` we have `π_θ(e) = e`, so `p_θ(e) = ±L(e) = ±1 ≠ 0`, and by continuity
-`p_θ(e)^2 > 0` on an arc. Hence `c0 > 0`. ∎
-
-**Remark.** We never evaluated the integral. (One *can*: `c0 = ∫_0^{2π} cos²θ dθ
-= π`, an analytic fact about the cosine *function*. But the proof does not need the
-value, only that it is a single positive number — which is exactly what removes any
-dependence on `sin²+cos²=1`.)
-
----
-
-## 4. Orthogonality by reflection symmetry: `u ⟂ v ⇒ B(u,v) = 0`
-
-**Lemma 3.** If `u ⟂ v` then `B(u,v) = 0`.
-*Proof.* Let `σ := σ_u` be the reflection across the line spanned by `u` (P4). It
-is a length-preserving linear map; on directions it acts as a measure-preserving
-reflection of the circle `S` (P6).
-
-**B is reflection-invariant.** For any vectors `x, y`,
-```
-B(σx, σy) = ∫_0^{2π} p_θ(σx) p_θ(σy) dθ .
-```
-As with rotations, `p_θ(σx) = p_{σ(θ)}(x)`, where `σ(θ)` is the reflected direction
-(σ preserves perpendicular feet and lengths, P3). Substituting and changing
-variables `φ = σ(θ)` — a measure-preserving bijection of `S` (P6) —
-```
-B(σx, σy) = ∫_S p_{σ(θ)}(x) p_{σ(θ)}(y) dθ = ∫_S p_φ(x) p_φ(y) dφ = B(x,y).    (†)
-```
-
-**Apply to our perpendicular pair.** By (P4), `σ` fixes `u` and negates every
-vector perpendicular to the line of `u`. Since `v ⟂ u`, we have `σ(u) = u` and
-`σ(v) = −v`. Plugging `x=u`, `y=v` into (†) and using bilinearity (Lemma 1):
-```
-B(u,v) = B(σu, σv) = B(u, −v) = −B(u,v).
-```
-Therefore `2 B(u,v) = 0`, i.e. `B(u,v) = 0`. ∎
-
-No trigonometric identity, no value of any integral, and no coordinate appeared:
-orthogonality of the legs forces the cross term to vanish purely because the
-configuration has a reflection symmetry that reverses `v` while preserving the
-pairing.
-
----
-
-## 5. The theorem
-
-**Theorem (Pythagoras).** Let `△OAB` be a right triangle with the right angle at
-`O`. Write `u = OA`, `v = OB`, so `u ⟂ v`, and set
-`a = L(u)`, `b = L(v)`, `c = L(AB)`. Then
-```
-a^2 + b^2 = c^2 .
-```
-
-*Proof.* The side `AB` is the displacement from `A` to `B`, namely the vector
-`v − u`. By the polarization identity (★) and Lemmas 2–3,
-```
-c0 · c^2 = c0 · L(v − u)^2 = Q(v − u)                         [Lemma 2]
-         = Q(v) − 2 B(u,v) + Q(u)                              [(★)]
-         = Q(v) + Q(u)                                          [Lemma 3, B(u,v)=0]
-         = c0 · L(v)^2 + c0 · L(u)^2                            [Lemma 2]
-         = c0 · (a^2 + b^2).
-```
-Since `c0 > 0` (Lemma 2), divide to obtain `c^2 = a^2 + b^2`. ∎
-
-Equivalently, placing the hypotenuse as `u + v` (the diagonal of the rectangle on
-the legs) gives `Q(u+v) = Q(u) + Q(v)` by the same two lemmas — the proof is
-indifferent to that choice.
-
----
-
-## 6. Figure
+## 3. Figure
 
 ```
-                         B
-                         |\
-                         | \
-                         |  \
-                         |   \         The right angle is at O.
-                  v = OB |    \  AB = v - u   (the hypotenuse vector)
-            (length b)   |     \        c = L(AB)
-                         |      \
-                         |       \
-                         O--------A
-                            u = OA
-                           (length a)
+            B
+            |\
+            | \
+   v = λ·Ju |  \   AB = v − u   (hypotenuse, length c)
+   (len b)  |   \
+            |    \
+            O-----A
+              u = OA  (length a)
 
-   Directions θ sweep the circle S of all orientations:
+   J turns a direction by a right angle:
 
-                  e_{θ}
-                    ^          For each direction θ, p_θ(u) is the SIGNED length
-                   /              of the shadow of u on the line ℓ_θ.
-        ℓ_θ ------/------->     Q(u) = ∫ p_θ(u)^2 dθ  averages the squared shadow
-                 /                  over ALL directions; Lemma 2 says this equals
-                O                   c0·L(u)^2.  Lemma 3 says perpendicular vectors
-                                    have orthogonal shadows on average (B=0).
+        Ju ↑              u ⟂ v  means  v points along Ju  (axiom P4).
+           |              The invariant form B makes J skew (Lemma 1),
+           |  u           so B(u, Ju) = 0 (Lemma 2): the cross term in
+   --------O------>       Q(u+v) dies, leaving Q(u+v) = Q(u) + Q(v).
+
+   Two right-angle turns return the reverse direction:  J(Ju) = −u   (J² = −I).
 ```
 
-ASCII is used for portability; a TikZ version of the same figure:
+TikZ version:
 
 ```latex
-\begin{tikzpicture}[scale=1.3]
+\begin{tikzpicture}[scale=1.4]
   \coordinate (O) at (0,0);
-  \coordinate (A) at (2.4,0);     % u = OA, length a
-  \coordinate (B) at (0,1.6);     % v = OB, length b
-  \draw[thick] (O) -- (A) -- (B) -- cycle;        % right triangle
-  \draw (O) rectangle +(0.22,0.22);               % right-angle mark at O
-  \node[below] at (1.2,0) {$u=OA,\ a$};
-  \node[left]  at (0,0.8) {$v=OB,\ b$};
-  \node[above right] at (1.2,0.8) {$AB=v-u,\ c$};
-  % a sample direction and the shadow of u
-  \draw[->,gray] (-1.4,-0.7) -- (1.8,0.9) node[right] {$\ell_\theta,\ e_\theta$};
-  \draw[dashed] (A) -- ($(O)!(A)!(1.8,0.9)$);      % drop perpendicular from A
-  \node[gray] at (1.1,0.75) {$\pi_\theta(u)$};
+  \coordinate (A) at (2.2,0);          % u
+  \coordinate (B) at (0,1.5);          % v = lambda * J u  (here lambda*|u| = b)
+  \draw[thick] (O)--(A)--(B)--cycle;
+  \draw (O) rectangle +(0.2,0.2);      % right angle at O
+  \draw[->,gray] (O)--(0,0.9) node[left]{$Ju$};
+  \draw[->] (O)--(A) node[below right]{$u$};
+  \node[left] at (0,1.2){$v=\lambda Ju$};
+  \node[above right] at (1.1,0.75){$v-u,\ c$};
 \end{tikzpicture}
 ```
 
 ---
 
-## 7. Circularity audit
+## 4. Verification (Phase 4 — actually run)
 
-Every nontrivial fact used, and why its derivation does **not** assume
-`a²+b²=c²` (nor its analytic twin `sin²+cos²=1`, nor the coordinate norm).
+`verify/lie_generator_check.py` (SymPy + a numeric loop) was executed; real output
+is reproduced in `verify/README.md`. It confirms, from skew-invariance **alone**
+(with `B` left abstract):
+
+- solving `J^T B + B J = 0` forces `B = b₁₁·I` (a positive multiple of the identity
+  — the Schur/representation-theory uniqueness, the textbook backbone of (P5));
+- `B(u, Ju) = 0` (Lemma 2) — **PASS**, exact;
+- `Q(u+v) − [Q(u)+Q(v)] = 0` for `v = λ·Ju` (the Theorem) — **PASS**, exact;
+- numeric sanity on 100,000 random right triangles: max relative error
+  `5.5×10⁻¹⁶` — **PASS**.
+
+No Lean toolchain is installed in this environment, so the Lean file
+(`verify/lean/Pythagoras.lean`, the abstract orthogonality endpoint) is labeled
+**NOT COMPILED** and is not claimed to pass. (Phase 0 honesty: see `LOG.md`.)
+
+---
+
+## 5. Circularity audit
 
 | # | Fact used | Where | Why it is not Pythagoras-in-disguise |
 |---|---|---|---|
-| 1 | Orthogonal projection onto a line is **linear** (`p_θ` linear). | Lemma 0, P5 | A consequence of affine structure + uniqueness of the perpendicular foot. Proof uses only that perpendicularity is preserved by translation; no length formula. |
-| 2 | `L(λu) = |λ| L(u)` (homogeneity of length). | Lemma 2(i), P2b | A **similarity** axiom (homothety scales length). Independent of I.47; Euclid develops proportion (Book V/VI) without I.47. |
-| 3 | `L` invariant under rotations/reflections. | Lemmas 2,3; P2c | Congruent segments have equal length — a **congruence** axiom, logically prior to I.47. |
-| 4 | Equal-length vectors are related by a rotation. | Lemma 2 | Plane congruence/transitivity of the rotation action on a circle of given radius. No metric formula. |
-| 5 | `dθ` is invariant under rotations `θ↦θ+α` and reflections `θ↦2β−θ` of the circle of directions. | Lemmas 2,3; P6 | Arc length on a circle is invariant under its own isometries — a fact about the 1-dimensional circle of *directions*, not about planar distance. Does not presuppose `√(x²+y²)`. |
-| 6 | A reflection across the line of `u` fixes `u` and negates `v⟂u`. | Lemma 3, P4 | Definition of a plane reflection acting on the perpendicular complement; pure congruence geometry. |
-| 7 | Existence of the constant `c0>0`. | Lemma 2 | Positivity of an integral of a nonnegative, not-identically-zero continuous function. Its **value is never used**, so no integral identity (and in particular not `∫cos²=π`, which would route through `sin²+cos²=1`) enters the proof. |
-| 8 | Polarization `Q(u±v)=Q(u)±2B(u,v)+Q(v)`. | Lemma 1, (★) | Algebraic expansion of a **bilinear** form (Lemma 1), itself from linearity of `p_θ`. Pure algebra. |
+| 1 | `J^2 = −I` | P2 | "Two `90°` rotations = the `180°` half-turn = central inversion `x↦−x`." Pure congruence; no length formula. |
+| 2 | `u ⟂ v ⇔ v = λJu` | P4 | Definition of right angle via the congruence `J`. Independent of any metric formula. |
+| 3 | `L` homogeneous & rigid-motion invariant | P3 | Congruence + similarity axioms; logically prior to I.47. |
+| 4 | `B` invariant ⇒ `J` skew (`B(Ju,v)=−B(u,Jv)`) | Lemma 1 | Differentiate/transport the invariance of `B`; uses `J^2=−I` (fact 1). No coordinates, no `sin²+cos²=1`. |
+| 5 | `B(u,Ju)=0` | Lemma 2 | Symmetry of `B` + skewness (fact 4). One line of algebra. |
+| 6 | `B(u,u)=c₀L(u)²`, `B` bilinear & rotation-invariant | **P5 (imported)** | The known integral-geometry/inner-product core; constructed in Project 1 by averaging signed projections. **Borrowed, not claimed new.** Its own non-circularity is audited in the Project-1 file. |
 
-**Tools deliberately avoided** (each would have introduced circularity):
+**Tools deliberately avoided:** the coordinate distance formula `√(x²+y²)`, the
+coordinate inner product `u₁v₁+u₂v₂` *as a definition*, `sin²+cos²=1`, the law of
+cosines, and similar-triangle ratios. None appears in §1–§2. (The coordinate
+identity appears only inside the SymPy check, clearly labeled as verification.)
 
-- the coordinate distance formula `√(x²+y²)` — **never used** (appears only in the
-  SymPy/Monte-Carlo *verification*, explicitly labeled as a check, not the proof);
-- the coordinate inner product `u₁v₁+u₂v₂` as a *definition* — **never used**; our
-  inner product `B` is *constructed*, then *shown* (in verification) to be a
-  positive multiple of it;
-- `sin²θ+cos²θ=1` and the law of cosines — **never used**; orthogonality is handled
-  by reflection symmetry (Lemma 3), not by a trig identity;
-- similarity of the two sub-triangles of the altitude (the engine of Families C, F)
-  — **never used**.
-
-**Conclusion of the audit:** no step presupposes the Pythagorean relation. The
-proof is non-circular.
+**Where the real weight sits:** in (P5). The orthogonality machinery (§1–§2) is
+genuinely coordinate-free and trig-free, but it only *converts* (P5) into the
+theorem. (P5) is the substantive, non-novel input.
 
 ---
 
-## 8. Novelty claim
+## 6. Novelty ledger (summary; full version in `NOVELTY.md`)
 
-**Closest known proof.** The nearest relative is the **vector / inner-product
-proof** (catalog Family G): both culminate in
-`L(u+v)² = L(u)² + L(v)²` once a cross term vanishes by orthogonality, and both
-implicitly invoke an inner-product structure.
-
-**What is genuinely new.**
-
-1. **A constructed, not assumed, inner product.** Family G (and its complex,
-   Clifford, and `Var(X+Y)` cousins) *begins* with an inner product — typically the
-   coordinate form `u₁v₁+u₂v₂`, which already contains the theorem. Here the
-   bilinear form `B(u,v) = ∫₀^{2π} p_θ(u)p_θ(v) dθ` is **manufactured by integrating
-   orthogonal projections over the entire rotation group**. The Euclidean inner
-   product is an *output* of the proof (verified, in §verify, to be `π` times the
-   standard one), not an *input*.
-
-2. **Orthogonality derived by symmetry, not decreed.** Family G writes `⟨u,v⟩=0`
-   for perpendicular legs by fiat (it is the coordinate computation). Here the
-   vanishing of the cross term is **forced by a reflection symmetry** of the
-   averaged pairing (Lemma 3) — a genuinely different mechanism, and one that uses
-   no trigonometric identity and no coordinates.
-
-3. **A new foundation: integral geometry over directions.** The decomposition is a
-   **Parseval-type identity over the continuum of directions** (a Cauchy-style
-   averaging), structurally distinct from a single basis expansion. This foundation
-   — measure on the rotation group, mean squared projection — is **essentially
-   absent from Loomis's 367 proofs** and from the standard textbook families. It
-   also subsumes the **probabilistic** reading (with `θ` uniform, `Q/2π` is a
-   variance and `B/2π` a covariance), so a single argument realizes both
-   under-mined foundations (integral geometry and probability) at once.
-
-**Honesty.** This is best described as a **fresh synthesis on a new foundation**,
-not a wholly unprecedented theorem: the *conclusion line* coincides with the
-inner-product proof, as it must, since all proofs of one theorem agree at the end.
-What is new is the **route and the foundation** — building the metric from averaged
-shadows and extracting orthogonality from reflection symmetry — and the explicit,
-audited avoidance of every Pythagoras-encoding shortcut. To my knowledge this exact
-construction (averaged *signed-projection* bilinear form + reflection-symmetry
-orthogonality, with no trig identity and no coordinate norm) does not appear among
-the classical 367 or in the standard modern collections; the closest published
-ideas are Cauchy's mean-projection formula in integral geometry (used for
-*perimeter*, not for the Pythagorean relation) and the abstract `L²` Pythagorean
-theorem (used without the directional-integral construction).
+| Idea in this proof | Closest known proof (Phase 2) | Exact delta |
+|---|---|---|
+| `B(u,u)=c₀L(u)²` (proportionality) | Project 1 integral geometry; inner-product proofs | **none** — imported verbatim as (P5) |
+| invariant form is unique = dot product | Schur uniqueness for `SO(2)` (Berkeley notes; arXiv 2103.01517) | none — textbook |
+| orthogonality via skew generator `B(u,Ju)=0` | skew-adjointness of the isometry Lie algebra (Noether/Riemannian geometry) | **thin** — repackages orthogonality as Lie-algebra skewness instead of Project 1's *reflection symmetry*; no source found for *this exact application*, but trivially adaptable |
 
 ---
 
-## 9. Summary of the logical skeleton
+## 7. Final verdict (pick the honest one)
 
-```
-P5 ─► Lemma 0: p_θ linear
-                 │
-                 ▼
-Lemma 1: B bilinear & symmetric, Q = B(·,·)  ──►  (★) polarization
-   │                                                   │
-P2b,P3,P6 ─► Lemma 2: Q(u) = c0·L(u)^2  (c0>0)        │
-P4,P3,P6 ─► Lemma 3: u⟂v ⇒ B(u,v)=0                   │
-                 │                                     │
-                 ▼                                     ▼
-   Theorem:  c0·c^2 = Q(v−u) = Q(u)+Q(v) = c0·(a^2+b^2)  ⇒  a^2+b^2=c^2
-```
+**NOT NOVEL (foundationally).** This proof reduces to core **(C)**
+(bilinearity + orthogonality). Its substantive step (P5) is the known
+integral-geometry / inner-product content (Project 1; Schur uniqueness of the
+`SO(2)`-invariant form). The only non-standard element is the *exposition* of
+orthogonality via the skew infinitesimal generator (`J^2=−I`,
+`B(Ju,v)+B(u,Jv)=0 ⇒ B(u,Ju)=0`).
+
+- **Closest prior art:** (i) Schur/representation-theory uniqueness of the
+  `SO(2)`-invariant symmetric bilinear form
+  (https://math.berkeley.edu/~serganov/math252/notes5.pdf;
+  https://arxiv.org/pdf/2103.01517); (ii) skew-adjointness of the Lie algebra of an
+  isometry group (standard Riemannian geometry / Noether); (iii) Project 1's
+  averaged-projection construction of `B` (archived in this repo).
+- **The most I will claim:** *PLAUSIBLY NOVEL only as a route/exposition* for the
+  orthogonality step — **confidence LOW**. I found no write-up proving the planar
+  theorem via the skew rotation generator, but the mechanism is textbook and an
+  expert would adapt it in one line, so this does not rise to a novel *foundation*.
+- **Unchecked risk W:** an undergraduate text or lecture note may present exactly
+  this skew-generator packaging; my search did not exhaust the textbook literature
+  (it is hard to query for "obvious" folklore). If found, the verdict drops to a
+  flat NOT NOVEL with that source.
+
+**Bottom line.** Honest ceiling: this is a clean, rigorous, non-circular *new
+exposition* of a *known* (core-(C)) proof — not a genuinely new foundation. Per the
+project's framing, the valuable output here is the **documented negative result**:
+the four other candidate foundations (entropy power, information geometry, area
+functional equations, plus the killed tropical/`p`-adic/heat-kernel routes) were
+each shown to be KNOWN, circular, or meaningless, and the survivor's novelty is
+honestly thin. See `LOG.md` for the dead ends and `NOVELTY.md` for the referee pass.
