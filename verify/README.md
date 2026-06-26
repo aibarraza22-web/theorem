@@ -1,8 +1,39 @@
 # Verification
 
-> **Project 2 (current `proof/FINAL_PROOF.md` — skew-generator proof):** see the
-> "Project 2 verification" section at the bottom. The checks below the line are
-> from Project 1 (archived integral-geometry proof) and still run/pass.
+> **Project 3 (current `proof/FINAL_PROOF.md` — dissection proof):** see the
+> "Project 3 verification" section immediately below. Project 2 (skew-generator) and
+> Project 1 (integral-geometry) checks follow and still run/pass.
+
+---
+
+## Project 3 verification — dissection (Shapely)  ✅ PASS
+
+Files: `explore.py` (tiling-overlay generator that *discovered* the dissection and
+reproduces Perigal as a sanity check), `inspect_candidate.py` (piece dump + generality
+scan), `verify_dissection.py` (self-contained closed-form verifier + SVG emitter).
+
+Run: `pip install shapely && python3 verify/verify_dissection.py`. Real output:
+
+```
+a=  3.0000 b=  4.0000 c^2=25.0000: src_sum=25.000000 tgt_sum=25.000000 src_ovl=0.00e+00 tgt_ovl=0.00e+00 src_uni_err=0.00e+00 tgt_uni_err=0.00e+00 vtx_mismatch=0  -> PASS
+a=  1.0000 b=  2.0000 c^2=5.0000:  ... vtx_mismatch=0  -> PASS
+a=  5.0000 b= 12.0000 c^2=169.000: ... tgt_uni_err=7.11e-15 vtx_mismatch=0  -> PASS
+a=  2.0000 b=  3.0000 c^2=13.0000: ... vtx_mismatch=0  -> PASS
+a=  1.4142 b=  3.0000 c^2=11.0000: ... vtx_mismatch=0  -> PASS
+a=  0.7000 b=  2.3000 c^2=5.7800:  ... vtx_mismatch=0  -> PASS
+a=  1.0000 b=  1.0000 c^2=2.0000:  ... vtx_mismatch=0  -> PASS
+SVG written: verify/dissection.svg
+=== OVERALL: PASS ===
+```
+
+Checks (for each `a,b`): source pieces partition the two leg squares; target pieces
+tile the hypotenuse square; pairwise interior overlap 0; unions exact (sym-diff
+`<10⁻¹⁴`); each translation maps source vertices onto target vertices exactly. The
+proof is **rigorous and verified**; its honest *novelty* verdict is **DUPLICATE
+(family-level)** — see `proof/FINAL_PROOF.md` §0 and `NOVELTY.md`.
+
+Figure: `verify/dissection.svg` (leg squares cut into 5 colored pieces, left; the same
+pieces tiling the tilted hypotenuse square, right).
 
 ---
 

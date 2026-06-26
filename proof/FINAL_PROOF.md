@@ -1,239 +1,180 @@
-# Pythagoras via the Skew Infinitesimal Generator of Rotation
-## (Project 2 — search-first; honest verdict at the end)
-
-> **Read the verdict first (§7).** This is a *complete and non-circular* proof, but
-> its novelty is deliberately capped. The prior-art gauntlet (`prior_art.md`) shows
-> its substance is known. What follows is the best-constructed survivor (candidate
-> **C2**), presented rigorously, with an explicit accounting of which step is new
-> (thin) and which is borrowed.
+# A Corner-Anchored 5-Piece Translation Dissection Proof of the Pythagorean Theorem
+## (Project 3 — dissection; honest verdict first)
 
 ---
 
-## 0. Accepted starting facts (axioms)
+## 0. VERDICT (read first)
 
-Work in the Euclidean plane as a 2-dimensional real vector space with a fixed
-origin `O`. We accept exactly:
+**DUPLICATE (family-level) — NOT addable.** The dissection below is **rigorous,
+direct, and fully verified**, but the collision gauntlet (`collisions.md`) shows it is
+a **member of the catalogued 2-parameter "superposition of two plane tessellations"
+family** documented on cut-the-knot (`DoublePythLattice.shtml`), which "furnishes a
+whole 2-parameter family of various dissections … Perigal's dissection … a special
+case." This dissection is the family member whose `c`-grid is **anchored at the
+right-angle vertex** (cutting *both* leg squares, 3+2), as opposed to Perigal's
+big-square-centred member (4+1). 
 
-- **(P1)** *(Linear structure.)* Vectors add and scale over `ℝ`; `dim = 2`.
+- **Closest catalogued proof:** Perigal's pinwheel (C2) — same family, same cut
+  directions (∥/⊥ to the hypotenuse), same motion (translation), same minimal count
+  (5). **Delta:** both squares cut (3+2) vs Perigal's (4 congruent + whole small
+  square); anchored at the right-angle vertex rather than the big square's centre.
+  Relative to the *classic Perigal* it is a **VARIANT**; relative to the *catalogued
+  2-parameter family* it is a **member = DUPLICATE**.
+- **Residual caveat (honest):** cut-the-knot pages were **unreachable** (gateway 403),
+  so the family description rests on a search snippet, not the page. But the snippet is
+  explicit that the family is 2-parameter with Perigal as a special case, which is
+  enough to make the duplicate call. The print catalog (full Loomis, Frederickson) was
+  not searchable either.
 
-- **(P2)** *(Rotations and the generator `J`.)* Rotations about `O` form a
-  one-parameter group `{ρ_t}` of **linear** maps. Let `J := ρ_{90°}` be rotation by
-  a right angle. Rotating by `90°` twice is rotation by `180°`, which is the
-  **central inversion** `x ↦ −x`. Hence
-  ```
-  J^2 = −I.
-  ```
-  *(This is a congruence fact — "two right-angle turns is a half-turn is the
-  point-reflection through `O`" — and uses no length formula.)*
-
-- **(P3)** *(Length.)* There is a length function `L` on vectors with `L(u)=0 ⇔
-  u=0`, homogeneity `L(λu)=|λ|L(u)`, and invariance under all rigid motions
-  (rotations and reflections). No coordinate formula for `L` is assumed.
-
-- **(P4)** *(Perpendicularity via the right-angle rotation.)* Two nonzero vectors
-  are **perpendicular**, `u ⟂ v`, exactly when `v` is parallel to `Ju`, i.e.
-  `v = λ·Ju` for some scalar `λ ≠ 0`. *(This is the definition of "right angle" in
-  terms of the congruence `J`; it does not presuppose any metric formula. It agrees
-  with the Euclidean right angle because `J` is the congruence that turns a
-  direction into the perpendicular one.)*
-
-- **(P5)** *(Proportionality input — BORROWED, see the honesty note.)* Squared
-  measured length is a **rotation-invariant quadratic form**: there is a symmetric
-  bilinear form `B` and a constant `c₀ > 0` with
-  ```
-  B(u,u) = c₀ · L(u)^2   for all u,     and   B(ρ_t u, ρ_t v) = B(u,v)  for all t.
-  ```
-
-**Honesty note on (P5).** (P5) is the genuine content of the Pythagorean theorem
-("the measured metric comes from a rotation-invariant inner product"), and it is
-**not new**. It is established by the integral-geometry construction of Project 1
-(archived as `proof/ARCHIVE_project1_integral_geometry.md`): set
-`B(u,v) = ∫₀^{2π} p_θ(u)\,p_θ(v)\,dθ` with `p_θ` the signed projection onto
-direction `θ`; that `B` is bilinear and rotation-invariant, and `B(u,u)=π·L(u)^2`
-by rotation invariance + quadratic homogeneity (so `c₀=π`). Equivalently, average
-any positive-definite seed form over `{ρ_t}` (the Weyl/Hurwitz trick). We **import**
-(P5) rather than re-derive it, and we **do not claim it as novel** — it is exactly
-the known integral-geometry / inner-product core. This proof's only non-standard
-move is the *orthogonality* step below.
+The proof is presented in full anyway, because the *rigor* (airtight congruence +
+tiling for general `a,b`) is the part worth keeping; only the *novelty* fails.
 
 ---
 
-## 1. The rotation generator is skew with respect to `B`
+## 1. Axioms (the only facts a dissection proof may assume)
 
-**Lemma 1.** `B(Ju, v) + B(u, Jv) = 0` for all `u, v`.
+- **(Ax1) Area additivity.** If a polygon is the union of finitely many polygons with
+  pairwise disjoint interiors, its area is the sum of their areas.
+- **(Ax2) Isometry-invariance of area.** Congruent polygons (related by a rigid motion)
+  have equal area. Here every motion is a **translation**.
+- **(Ax3) Area of a square.** A square with side length `ℓ` has area `ℓ²`.
 
-*Proof.* By (P5), `B` is invariant under every rotation `ρ_t`: `B(ρ_t u, ρ_t v) =
-B(u,v)`. The family `t ↦ B(ρ_t u, ρ_t v)` is therefore constant in `t`. Differentiate
-at `t=0`. Writing `G` for the infinitesimal generator (`d/dt ρ_t |_{t=0} = G`, so
-`ρ_t = exp(tG)`), the product rule gives
-```
-0 = d/dt B(ρ_t u, ρ_t v)|_{t=0} = B(Gu, v) + B(u, Gv).
-```
-The generator `G` and the right-angle rotation `J` are the same one-parameter
-group's infinitesimal and finite members; both are skew for `B` (the displayed
-identity holds with `G`, and `J = ρ_{90°}` is in the group, so conjugation/invariance
-by `J` likewise gives `B(Ju,Jv)=B(u,v)`; combined with `J^2=−I` this yields the
-same skew relation for `J`). Concretely, from `B(Ju,Jv)=B(u,v)` apply it to
-`(u, Jv)`: `B(Ju, J(Jv)) = B(u, Jv)`, i.e. `B(Ju, −v) = B(u,Jv)` using `J^2=−I`,
-so `−B(Ju,v) = B(u,Jv)`, which is the claim. ∎
-
-*(The middle paragraph is only to connect the finite map `J` to the skew relation;
-the clean one-liner is the last sentence: `J^2=−I` plus `J`-invariance of `B` gives
-`B(Ju,v) = −B(u,Jv)`.)*
-
-**Lemma 2 (orthogonality for free).** `B(u, Ju) = 0` for every `u`.
-
-*Proof.* Put `v = u` in Lemma 1: `B(Ju, u) + B(u, Ju) = 0`. Since `B` is symmetric,
-`B(Ju, u) = B(u, Ju)`, so `2·B(u, Ju) = 0`, giving `B(u, Ju) = 0`. ∎
-
-This is the heart of the route: **perpendicular vectors are `B`-orthogonal because
-the rotation generator is skew-adjoint.** No coordinates, no `sin²+cos²=1`, no trig
-identity — only `J^2=−I` and invariance of `B`.
+**No distance formula is assumed.** We treat `a, b, c` as the given side lengths of the
+right triangle's two legs and hypotenuse; we never compute `c` from `a, b`.
 
 ---
 
-## 2. The theorem
+## 2. Configuration (coordinate model)
 
-**Theorem (Pythagoras).** Let `△OAB` have its right angle at `O`. Set
-`u = OA`, `v = OB` with `u ⟂ v`, and `a = L(u)`, `b = L(v)`, `c = L(AB)`. Then
-`a² + b² = c²`.
+Right angle at the origin. Legs `a ≤ b`. Place:
 
-*Proof.* By (P4), `v = λ·Ju` for some scalar `λ`. Write `Q(x) := B(x,x) = c₀ L(x)²`
-(by (P5)). The hypotenuse is `AB = v − u`. Expanding the quadratic form by
-bilinearity (P5) and symmetry,
-```
-Q(v − u) = Q(v) − 2·B(u, v) + Q(u).
-```
-The cross term: `B(u, v) = B(u, λ Ju) = λ·B(u, Ju) = 0` by Lemma 2. Hence
-```
-c₀ · c²  =  Q(v − u)  =  Q(u) + Q(v)  =  c₀ · a²  +  c₀ · b² .
-```
-Divide by `c₀ > 0`: `a² + b² = c²`. ∎
+- **Big leg square** `B0 = [0,b] × [0,b]` (side `b`, area `b²`).
+- **Small leg square** `S0 = [b, b+a] × [0, a]` (side `a`, area `a²`).
+- **Hypotenuse square** `C` = square with vertices `(0,0), (b,a), (b−a, a+b), (−a, b)`.
+  Its edges are the vectors `p=(b,a)` and `q=(−a,b)`; `q` is the `90°` rotation of `p`,
+  so `C` is a genuine square (four equal sides, right angles — by translation/rotation
+  congruence, **not** by any length formula), with side equal to the hypotenuse, hence
+  area `c²` by (Ax3).
 
-*(Using the diagonal `u + v` instead of `v − u` gives the same result, since the
-cross term vanishes either way.)*
+Let `x0 = (a²−ab+b²)/b` and `x1 = (a²+b²)/b`. Since `a ≤ b`, one checks
+`0 < x0 ≤ b` and `b ≤ x1 ≤ b+a` (equalities only at `a=b`), so all points below lie in
+the stated squares.
 
 ---
 
-## 3. Figure
+## 3. The five pieces and their isometries (all translations)
+
+| # | source square | source vertices | translation `t` | target vertices `= source + t` |
+|---|---|---|---|---|
+| P0 | `B0` | (0,0),(0,b),(x0,b),(b,a) | (0, 0) | (0,0),(0,b),(x0,b),(b,a) |
+| P1 | `B0` | (0,0),(b,0),(b,a) | (−a, b) | (−a,b),(b−a,b),(b−a,a+b) |
+| P2 | `B0` | (b,a),(x0,b),(b,b) | (−b, −a) | (0,0),(x0−b,b−a),(0,b−a) |
+| P3 | `S0` | (b,a),(b+a,a),(b+a,0),(x1,0) | (−(a+b), b−a) | (−a,b),(0,b),(0,b−a),(x1−a−b,b−a) |
+| P4 | `S0` | (x1,0),(b,0),(b,a) | (−a, b) | (x1−a,b),(b−a,b),(b−a,a+b) |
+
+**Congruence (Ax2).** Each isometry is the **pure translation** `v ↦ v + t` (rotation
+part = identity matrix `I`). A translation is a rigid motion, so each target piece is
+congruent to its source piece. The table's right column is obtained by adding `t` to
+each source vertex; `verify/verify_dissection.py` checks vertex-set equality exactly
+(0 mismatches) for many `a,b`. Because the maps are translations, **no piece is
+reflected or rotated** — the dissection is **translation-only**.
+
+---
+
+## 4. Exact tiling — no gaps, no overlaps
+
+### 4a. Source pieces partition the two leg squares
+- **Big square `B0`.** P1 is the triangle below the segment `(0,0)→(b,a)` (which runs
+  from the corner `(0,0)` to the point `(b,a)` on the right edge, direction `p`,
+  parallel to the hypotenuse). Above that segment, the remaining region of `B0` is split
+  by the segment `(b,a)→(x0,b)` (direction `q`, perpendicular to the hypotenuse) into
+  the quadrilateral P0 and the small corner triangle P2 at `(b,b)`. The three interiors
+  are pairwise disjoint and `P0 ∪ P1 ∪ P2 = B0`. Areas:
+  `|P1|=½ab`, `|P2|=a(b−a)²/(2b)`, `|P0| = b² − ½ab − a(b−a)²/(2b)`; sum `= b²`. ✓
+- **Small square `S0`.** The single segment `(b,a)→(x1,0)` (direction `(a,−b)`,
+  perpendicular to the hypotenuse) splits `S0` into the quadrilateral P3 and the
+  triangle P4. `|P4| = a³/(2b)`, `|P3| = a² − a³/(2b)`; sum `= a²`. ✓
+- Hence the five source interiors are pairwise disjoint and their union is
+  `B0 ∪ S0` (the two leg squares), with total area `a²+b²` by (Ax1).
+
+### 4b. Target pieces partition the hypotenuse square
+Translating each piece by its `t` gives five polygons inside `C` (vertices in the
+table's last column lie on `C`'s lattice of cut lines). `verify/verify_dissection.py`
+confirms, for every tested `a,b`: pairwise interior intersection area `= 0`, and the
+union equals `C` exactly (symmetric-difference area `< 10⁻¹⁴`). So the five target
+interiors are pairwise disjoint and tile `C`, with total area `c²`.
+
+### 4c. Shared-edge matching (why the cuts fit)
+The cut directions are exactly `p` (∥ hypotenuse) and `q` (⊥ hypotenuse). Each internal
+edge produced in a leg square is a translate, by the corresponding `t`, of an edge of
+the hypotenuse-square tiling; opposite pieces share that edge with matching endpoints
+(verified by the vertex-equality check). This is the standard reason a
+tessellation-overlay dissection closes up: both the leg-square tiling and the
+`c`-square carry the **same translation lattice** `Λ = ⟨p, q⟩`, so a piece removed from
+one fundamental domain fits exactly into the other.
+
+---
+
+## 5. Conclusion (the theorem)
+
+By (Ax1) applied in `C` and in `B0 ∪ S0`, and (Ax2) (each piece moves by a translation,
+preserving area):
+```
+area(C) = Σ area(target pieces) = Σ area(source pieces) = area(B0) + area(S0).
+```
+By (Ax3), `area(C)=c²`, `area(B0)=b²`, `area(S0)=a²`. Therefore
+```
+            c² = a² + b².    ∎
+```
+The `3,4,5` instance (figure `verify/dissection.svg`) is illustration only; §3–§4 hold
+for all `a ≤ b` (and degenerate to a 4-piece dissection when `a=b`, as P2 vanishes).
+
+---
+
+## 6. Figure
+
+`verify/dissection.svg` draws both configurations (left: the two leg squares cut into
+the 5 colored pieces; right: the tilted hypotenuse square tiled by the same 5 pieces,
+matching colors). Schematic (`a=3,b=4`):
 
 ```
-            B
-            |\
-            | \
-   v = λ·Ju |  \   AB = v − u   (hypotenuse, length c)
-   (len b)  |   \
-            |    \
-            O-----A
-              u = OA  (length a)
-
-   J turns a direction by a right angle:
-
-        Ju ↑              u ⟂ v  means  v points along Ju  (axiom P4).
-           |              The invariant form B makes J skew (Lemma 1),
-           |  u           so B(u, Ju) = 0 (Lemma 2): the cross term in
-   --------O------>       Q(u+v) dies, leaving Q(u+v) = Q(u) + Q(v).
-
-   Two right-angle turns return the reverse direction:  J(Ju) = −u   (J² = −I).
-```
-
-TikZ version:
-
-```latex
-\begin{tikzpicture}[scale=1.4]
-  \coordinate (O) at (0,0);
-  \coordinate (A) at (2.2,0);          % u
-  \coordinate (B) at (0,1.5);          % v = lambda * J u  (here lambda*|u| = b)
-  \draw[thick] (O)--(A)--(B)--cycle;
-  \draw (O) rectangle +(0.2,0.2);      % right angle at O
-  \draw[->,gray] (O)--(0,0.9) node[left]{$Ju$};
-  \draw[->] (O)--(A) node[below right]{$u$};
-  \node[left] at (0,1.2){$v=\lambda Ju$};
-  \node[above right] at (1.1,0.75){$v-u,\ c$};
-\end{tikzpicture}
+ LEG SQUARES (cut)                         HYP SQUARE (tiled, tilted)
+   (0,b)___________(x0,b)(b,b)                        (b-a,a+b)
+    |  P0        /  \P2|                                /\
+    |          /     \ |                               /  \
+    |        /  (b,a) \|(b,a)___(b+a,a)              /P1  \
+    |      /      |  P3|        |                  /  P4   \
+    |   /   P1    | P4 |        |               (-a,b)......(b,a)
+    | /          |     |        |                  \  P0   /
+ (0,0)__________(b,0) (x1,0)__(b+a,0)               \     /
+                                                      \  /
+   cuts: (0,0)->(b,a) [∥ hyp],                         \/
+         (b,a)->(x0,b) [⊥ hyp],                      (0,0)
+         (b,a)->(x1,0) [⊥ hyp]
 ```
 
 ---
 
-## 4. Verification (Phase 4 — actually run)
+## 7. Circularity audit
 
-`verify/lie_generator_check.py` (SymPy + a numeric loop) was executed; real output
-is reproduced in `verify/README.md`. It confirms, from skew-invariance **alone**
-(with `B` left abstract):
-
-- solving `J^T B + B J = 0` forces `B = b₁₁·I` (a positive multiple of the identity
-  — the Schur/representation-theory uniqueness, the textbook backbone of (P5));
-- `B(u, Ju) = 0` (Lemma 2) — **PASS**, exact;
-- `Q(u+v) − [Q(u)+Q(v)] = 0` for `v = λ·Ju` (the Theorem) — **PASS**, exact;
-- numeric sanity on 100,000 random right triangles: max relative error
-  `5.5×10⁻¹⁶` — **PASS**.
-
-No Lean toolchain is installed in this environment, so the Lean file
-(`verify/lean/Pythagoras.lean`, the abstract orthogonality endpoint) is labeled
-**NOT COMPILED** and is not claimed to pass. (Phase 0 honesty: see `LOG.md`.)
-
----
-
-## 5. Circularity audit
-
-| # | Fact used | Where | Why it is not Pythagoras-in-disguise |
-|---|---|---|---|
-| 1 | `J^2 = −I` | P2 | "Two `90°` rotations = the `180°` half-turn = central inversion `x↦−x`." Pure congruence; no length formula. |
-| 2 | `u ⟂ v ⇔ v = λJu` | P4 | Definition of right angle via the congruence `J`. Independent of any metric formula. |
-| 3 | `L` homogeneous & rigid-motion invariant | P3 | Congruence + similarity axioms; logically prior to I.47. |
-| 4 | `B` invariant ⇒ `J` skew (`B(Ju,v)=−B(u,Jv)`) | Lemma 1 | Differentiate/transport the invariance of `B`; uses `J^2=−I` (fact 1). No coordinates, no `sin²+cos²=1`. |
-| 5 | `B(u,Ju)=0` | Lemma 2 | Symmetry of `B` + skewness (fact 4). One line of algebra. |
-| 6 | `B(u,u)=c₀L(u)²`, `B` bilinear & rotation-invariant | **P5 (imported)** | The known integral-geometry/inner-product core; constructed in Project 1 by averaging signed projections. **Borrowed, not claimed new.** Its own non-circularity is audited in the Project-1 file. |
-
-**Tools deliberately avoided:** the coordinate distance formula `√(x²+y²)`, the
-coordinate inner product `u₁v₁+u₂v₂` *as a definition*, `sin²+cos²=1`, the law of
-cosines, and similar-triangle ratios. None appears in §1–§2. (The coordinate
-identity appears only inside the SymPy check, clearly labeled as verification.)
-
-**Where the real weight sits:** in (P5). The orthogonality machinery (§1–§2) is
-genuinely coordinate-free and trig-free, but it only *converts* (P5) into the
-theorem. (P5) is the substantive, non-novel input.
-
----
-
-## 6. Novelty ledger (summary; full version in `NOVELTY.md`)
-
-| Idea in this proof | Closest known proof (Phase 2) | Exact delta |
+| Fact used | Where | Independent of `a²+b²=c²`? |
 |---|---|---|
-| `B(u,u)=c₀L(u)²` (proportionality) | Project 1 integral geometry; inner-product proofs | **none** — imported verbatim as (P5) |
-| invariant form is unique = dot product | Schur uniqueness for `SO(2)` (Berkeley notes; arXiv 2103.01517) | none — textbook |
-| orthogonality via skew generator `B(u,Ju)=0` | skew-adjointness of the isometry Lie algebra (Noether/Riemannian geometry) | **thin** — repackages orthogonality as Lie-algebra skewness instead of Project 1's *reflection symmetry*; no source found for *this exact application*, but trivially adaptable |
+| Area additive over disjoint union | §4,§5 (Ax1) | Yes — a measure axiom. |
+| Translations preserve area | §3,§5 (Ax2) | Yes — congruence/measure axiom. |
+| Area of a square = side² | §5 (Ax3) | Yes — definition of area for squares. |
+| `C` is a square with side = hypotenuse | §2 | From `q` = 90°-rotation of `p` (an isometry); **no length formula** — we never assert `|p|=√(a²+b²)`, only that the four sides are congruent and the side equals the hypotenuse. |
+| Pieces tile both regions | §4 | Combinatorial/coordinate verification; uses only incidence of cut lines, not distances. |
+
+**No step computes `c` from `a,b` or uses `√(x²+y²)`.** The theorem emerges as an
+**area** identity among the three squares, converted to `c²=a²+b²` only by (Ax3). Core:
+**(A) area**, as every dissection proof must be — not dressed up as anything else.
 
 ---
 
-## 7. Final verdict (pick the honest one)
+## 8. Honest novelty statement
 
-**NOT NOVEL (foundationally).** This proof reduces to core **(C)**
-(bilinearity + orthogonality). Its substantive step (P5) is the known
-integral-geometry / inner-product content (Project 1; Schur uniqueness of the
-`SO(2)`-invariant form). The only non-standard element is the *exposition* of
-orthogonality via the skew infinitesimal generator (`J^2=−I`,
-`B(Ju,v)+B(u,Jv)=0 ⇒ B(u,Ju)=0`).
-
-- **Closest prior art:** (i) Schur/representation-theory uniqueness of the
-  `SO(2)`-invariant symmetric bilinear form
-  (https://math.berkeley.edu/~serganov/math252/notes5.pdf;
-  https://arxiv.org/pdf/2103.01517); (ii) skew-adjointness of the Lie algebra of an
-  isometry group (standard Riemannian geometry / Noether); (iii) Project 1's
-  averaged-projection construction of `B` (archived in this repo).
-- **The most I will claim:** *PLAUSIBLY NOVEL only as a route/exposition* for the
-  orthogonality step — **confidence LOW**. I found no write-up proving the planar
-  theorem via the skew rotation generator, but the mechanism is textbook and an
-  expert would adapt it in one line, so this does not rise to a novel *foundation*.
-- **Unchecked risk W:** an undergraduate text or lecture note may present exactly
-  this skew-generator packaging; my search did not exhaust the textbook literature
-  (it is hard to query for "obvious" folklore). If found, the verdict drops to a
-  flat NOT NOVEL with that source.
-
-**Bottom line.** Honest ceiling: this is a clean, rigorous, non-circular *new
-exposition* of a *known* (core-(C)) proof — not a genuinely new foundation. Per the
-project's framing, the valuable output here is the **documented negative result**:
-the four other candidate foundations (entropy power, information geometry, area
-functional equations, plus the killed tropical/`p`-adic/heat-kernel routes) were
-each shown to be KNOWN, circular, or meaningless, and the survivor's novelty is
-honestly thin. See `LOG.md` for the dead ends and `NOVELTY.md` for the referee pass.
+This is a **rigorous, direct, translation-only** dissection, distinct **from the
+classic Perigal cut** (it cuts both squares, 3+2, anchored at the right-angle vertex).
+But it is a **member of the catalogued 2-parameter tessellation-superposition family**
+(`DoublePythLattice`), so it is **DUPLICATE (family-level) — not addable**. See
+`NOVELTY.md` for the ledger and the referee pass (which the referee wins).

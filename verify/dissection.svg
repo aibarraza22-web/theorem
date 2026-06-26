@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5.00 -8.00 30.00 11.00">
+<text x="-4.00" y="1.2" font-size="0.5">leg squares (a=3.0, b=4.0)</text>
+<text x="11.00" y="1.2" font-size="0.5">hypotenuse square (c^2=a^2+b^2)</text>
+<polygon points="0.0000,-0.0000 4.0000,-0.0000 4.0000,-4.0000 0.0000,-4.0000" fill="none" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="4.0000,-0.0000 7.0000,-0.0000 7.0000,-3.0000 4.0000,-3.0000" fill="none" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="0.0000,-0.0000 0.0000,-4.0000 3.2500,-4.0000 4.0000,-3.0000" fill="#e6194B" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="0.0000,-0.0000 4.0000,-0.0000 4.0000,-3.0000" fill="#3cb44b" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="4.0000,-3.0000 3.2500,-4.0000 4.0000,-4.0000" fill="#4363d8" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="4.0000,-3.0000 7.0000,-3.0000 7.0000,-0.0000 6.2500,-0.0000" fill="#f58231" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="6.2500,-0.0000 4.0000,-0.0000 4.0000,-3.0000" fill="#911eb4" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="15.0000,-0.0000 19.0000,-3.0000 16.0000,-7.0000 12.0000,-4.0000" fill="none" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="15.0000,-0.0000 15.0000,-4.0000 18.2500,-4.0000 19.0000,-3.0000" fill="#e6194B" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="12.0000,-4.0000 16.0000,-4.0000 16.0000,-7.0000" fill="#3cb44b" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="15.0000,-0.0000 14.2500,-1.0000 15.0000,-1.0000" fill="#4363d8" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="12.0000,-4.0000 15.0000,-4.0000 15.0000,-1.0000 14.2500,-1.0000" fill="#f58231" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+<polygon points="18.2500,-4.0000 16.0000,-4.0000 16.0000,-7.0000" fill="#911eb4" fill-opacity="0.65" stroke="black" stroke-width="0.04"/>
+</svg>

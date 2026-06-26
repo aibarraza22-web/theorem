@@ -1,6 +1,33 @@
-# A Genuinely Novel Proof of the Pythagorean Theorem — research repo
+# Pythagorean Theorem — research repo (three passes)
 
-This repo holds **two passes** at the same goal.
+## Project 3 (current) — a dissection "addable to the catalog" — verdict: **DUPLICATE (family-level)**
+
+Search-first attempt at a *direct, rigorous, not-already-catalogued* dissection proof.
+Files: `known_dissections.md`, `candidates.md`, `collisions.md`, `proof/FINAL_PROOF.md`
+(rewritten), `verify/explore.py`, `verify/inspect_candidate.py`,
+`verify/verify_dissection.py`, `verify/dissection.svg`, `NOVELTY.md`, and the Project-3
+sections of `LOG.md` / `verify/README.md`.
+
+- **Phase 0 tooling (honest):** web ✅, SymPy ✅, **Shapely ✅** (2.1.2); **cut-the-knot
+  unreachable** (gateway 403) → catalog evidence from search snippets only.
+- **The dissection (candidate K1):** corner-anchored, **5 pieces, translation-only,
+  both leg squares cut (3+2)** — fully verified by Shapely for many `(a,b)` (areas,
+  zero overlap, exact unions, exact vertex maps). Rigorous and correct.
+- **Collision gauntlet (the heart):** K1 is a member of the catalogued **2-parameter
+  "superposition of two plane tessellations" family** (cut-the-knot `DoublePythLattice`,
+  "Perigal a special case"). So K1 is **DUPLICATE (family-level)** — a *VARIANT* of the
+  classic Perigal cut, but not addable. Documented with sources in `collisions.md`.
+- Honest deliverable = a verified dissection + an auditable proof that it is **already
+  in the catalog's tessellation family**.
+
+Project-2 deliverables sharing filenames are archived as `ARCHIVE_project2_*` and
+`proof/ARCHIVE_project2_skew_generator.md`.
+
+---
+
+## Earlier passes (novelty-focused)
+
+This repo also holds **two earlier passes** at proving the theorem from scratch.
 
 ## Project 2 (current, search-first) — honest verdict: **NOT NOVEL**
 
