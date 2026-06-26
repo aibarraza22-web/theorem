@@ -1,4 +1,32 @@
-# Pythagorean Theorem — research repo (three passes)
+# Pythagorean Theorem — research repo (four passes)
+
+## Project 4 (current) — a non-circular trigonometric proof — verdict: **VARIANT / likely DUPLICATE of KUS 2025**
+
+Search-first attempt at a non-circular trig proof using a mechanism not in the known set
+(Zimba 2009, Luzia 2015, Jackson–Johnson 2024, Kise–Uehara–Shinzato 2025). Files:
+`known_trig_proofs.md`, `candidates.md`, `audits.md`, `proof/FINAL_PROOF.md` (rewritten),
+`verify/trig_check.py`, `NOVELTY.md`, and the Project-4 sections of `LOG.md`/`verify/README.md`.
+
+- **Phase 0 tooling (honest):** web search ✅, SymPy ✅; **WebFetch ❌ — HTTP 403 on every
+  domain** (arXiv, cut-the-knot, Wikipedia, ResearchGate), so no full paper was readable;
+  all collision evidence is search-snippets only.
+- **The proof (P-β):** bisect both acute angles → `tan(A/2)=a/(b+c)`, `tan(B/2)=b/(a+c)`
+  (angle-bisector theorem); with `A/2+B/2=45°` and `tan45°=1`, tangent addition gives the
+  exact identity `tan(A/2+B/2)−1=(a²+b²−c²)/(c(a+b+c))`, forcing `a²+b²=c²`.
+  **Rigorously non-circular** (clean audit; key point: `tan45°=1` uses leg/leg, not the
+  hypotenuse, unlike the circular `sin45°`). SymPy-verified algebra (with the caveat that
+  SymPy can't certify non-circularity).
+- **Collision (the heart):** the mechanism is KUS 2025's angle-bisector / half-angle-tangent
+  route; snippets associate `tan=a/(b+c)`+`tan45°`+summed-half-angles with arXiv:2506.06304.
+  **Verdict: VARIANT, very likely DUPLICATE of KUS 2025; not addable** (couldn't read the
+  paper to confirm line-by-line). Two candidates died honestly: Weierstrass `t=tan(A/2)`
+  is **circular**; law of tangents is **vacuous**.
+
+Project-3 deliverables sharing filenames are archived as `ARCHIVE_project3_*`.
+
+---
+
+# (older) Pythagorean Theorem — research repo (three passes)
 
 ## Project 3 (current) — a dissection "addable to the catalog" — verdict: **DUPLICATE (family-level)**
 

@@ -1,8 +1,34 @@
 # Verification
 
-> **Project 3 (current `proof/FINAL_PROOF.md` — dissection proof):** see the
-> "Project 3 verification" section immediately below. Project 2 (skew-generator) and
-> Project 1 (integral-geometry) checks follow and still run/pass.
+> **Project 4 (current `proof/FINAL_PROOF.md` — non-circular trig proof):** see the
+> "Project 4 verification" section immediately below. Projects 3 (dissection), 2
+> (skew-generator), and 1 (integral-geometry) follow and still run/pass.
+
+---
+
+## Project 4 verification — non-circular trig proof (SymPy + numeric)  ✅ PASS (algebra only)
+
+File: `trig_check.py`. Run: `python3 verify/trig_check.py`. Real output:
+
+```
+tan(A/2+B/2) - 1  simplifies to: (a**2 + b**2 - c**2)/(c*(a + b + c))
+claimed value:                (a**2 + b**2 - c**2)/(c*(a + b + c))
+difference (must be 0):        0  -> PASS
+Therefore tan(A/2+B/2) = 1  <=>  a^2+b^2-c^2 = 0  (since c(a+b+c) > 0).
+tan(B/2) - tan(45 - A/2)  has numerator: a**2 + b**2 - c**2  ... numerator/(a^2+b^2-c^2) = 1
+sinA/(1+cosA) with sinA=a/c, cosA=b/c  = a/(b + c)   -> PASS
+Numeric: tan(A/2+B/2) on right triangles (c=sqrt(a^2+b^2)):
+  a=3,b=4,c=5: 1.000000000000 err=1.1e-16   a=5,b=12,c=13: 1.0 err=0.0e+00
+  a=1,b=1: err=2.2e-16   a=2,b=3: err=2.2e-16   a=0.7,b=2.3: err=0.0   a=7,b=24: err=1.1e-16
+=== ALGEBRA + NUMERIC: PASS ===
+(Non-circularity is NOT checked here — see the circularity audit.)
+```
+
+**Critical caveat (in the script):** SymPy *knows* `sin²+cos²=1`, so a passing algebra
+check does **NOT** prove non-circularity — it only confirms the identity chain reduces to
+`a²+b²=c²`. Non-circularity rests on the audit in `proof/FINAL_PROOF.md` §4 and
+`audits.md`, not on SymPy. Honest novelty verdict: **VARIANT, very likely DUPLICATE of
+KUS 2025** (see `NOVELTY.md`).
 
 ---
 

@@ -315,3 +315,71 @@ a correct worked dissection. Honesty caps: cut-the-knot pages unreadable (403); 
 catalog (full Loomis / Frederickson) not searchable — but neither gap points toward
 novelty. Per the mission, a documented DUPLICATE **with the source** is a valid,
 honest deliverable.
+
+---
+---
+
+# PROJECT 4 — A non-circular trigonometric proof (the live frontier)
+
+Goal: a non-circular trig proof using a mechanism NOT in {Zimba 2009, Luzia 2015,
+Jackson–Johnson 2024 + their §5 generator, Kise–Uehara–Shinzato 2025}. Project-3
+deliverables sharing filenames archived as `ARCHIVE_project3_*`.
+
+## P4 · Entry 0 — Phase 0 tooling (HONEST, and consequential)
+- **Web search: YES.** **SymPy: YES** (1.14, ran `verify/trig_check.py`).
+- **WebFetch: NO — HTTP 403 on EVERY domain tried** (arxiv.org, ar5iv.org,
+  ar5iv.labs.arxiv.org, cut-the-knot.org, en.wikipedia.org, researchgate.net).
+  Confirmed it is global, not site-specific. **Consequence:** I could not read a single
+  full paper (Zimba/Luzia/JJ/KUS). All mechanisms and all collision evidence come from
+  **search snippets only**, and snippet *prose* sometimes paraphrases the query, so I
+  weight the paper links/abstracts over the prose. Every "not in literature" claim is
+  capped to "not found in reachable snippets."
+
+## P4 · Entry 1 — Catalog (known_trig_proofs.md)
+Reconstructed mechanisms: Zimba = subtraction formula + `cos0=1`; Luzia = addition →
+cosine half-angle; JJ = Law of Sines + reflected isosceles + series, **+ a §5 generating
+family**; KUS 2025 = three proofs (tan double-angle + isosceles; **angle bisector** +
+isosceles; **novel relation from the angle bisector** unifying them). Occupied territory
+is broad.
+
+## P4 · Entry 2 — Candidates (candidates.md)
+Six routes. **Two died immediately:** P-δ Weierstrass `t=tan(A/2)` is **CIRCULAR** (the
+`1/(1+t²)` factor is `cos²(A/2)=1/(1+tan²)`, which is `sin²+cos²=1` smuggled in); P-ε law
+of tangents is **VACUOUS** (tautology on the right triangle). Survivors: P-α (sine
+addition at complement → `sin90°=1`), **P-β (angle-bisector half-angle tangents)**, P-γ
+(projection formula `c=a cosB+b cosA`).
+
+## P4 · Entry 3 — The proof I actually like (P-β) and its clean identity
+Bisect both acute angles: `tan(A/2)=a/(b+c)`, `tan(B/2)=b/(a+c)` (angle-bisector theorem
++ ratio def). `A/2+B/2=45°`, `tan45°=1`, tangent addition ⇒ the strikingly clean
+`tan(A/2+B/2)−1 = (a²+b²−c²)/(c(a+b+c))` (SymPy-verified, exact). So `tan45°=1` forces
+`a²+b²=c²`. **Circularity audit clean** — key insight: `tan45°=1` is non-circular
+(leg/leg) whereas `sin45°`/`cos45°` are circular (need the hypotenuse). This is the
+keeper.
+
+## P4 · Entry 4 — Collision gauntlet (audits.md) — the proof is NOT new
+Targeted searches (`tan a/(b+c) angle bisector tan45`, `bisect both acute angles half
+angle 45`) return KUS 2025 (arXiv:2506.06304) and snippet prose with **exactly P-β's
+ingredients**: `tan=a/(b+c)` from the angle bisector, the tangent formula, and "`tan45°`
+when the half-angles sum to 45°." Combined with KUS's abstract (two angle-bisector
+proofs + a unifying "novel relation"), **P-β is very likely KUS's proof #2/#3.** Could
+not read the paper to confirm (403). P-α = Zimba corollary (VARIANT); P-γ = classical
+similar-triangle proof (KNOWN). **No survivor is NO-COLLISION.**
+
+## P4 · Entry 5 — Dead ends (candid)
+- Hoped the **half-angle / Weierstrass** route was a fresh mechanism → it is **circular**
+  (hidden `sin²+cos²=1`). Genuinely instructive death.
+- Hoped **bisecting both acute angles + tan45** was distinct from KUS's *isosceles*
+  angle-bisector proof → snippets indicate KUS already cover the `tan=a/(b+c)`+`tan45`
+  idea; the no-isosceles distinction is too thin and likely subsumed by KUS #3.
+- Hoped **P-α** (`sin(A+B)=sin90°=1`) might count as new → it is a one-line corollary of
+  the non-circular addition formula = morally Zimba.
+- Mollweide/Newton routes die on `sin45°`/`cos45°` (circular); law of tangents vacuous.
+
+## P4 · Entry 6 — Verdict
+**VARIANT — very likely DUPLICATE of KUS 2025; not addable.** The featured proof (P-β) is
+**rigorous and genuinely non-circular** (its audit and the `tan45°` insight are the real
+deliverable), but its mechanism is KUS's 2025 angle-bisector / half-angle-tangent route.
+Honesty caps: WebFetch 403 → could not read KUS/Luzia/JJ in full; verdict is
+evidence-based, not a confirmed line-by-line match. Per the mission, an honest
+DUPLICATE/VARIANT verdict with sources is a valid deliverable.

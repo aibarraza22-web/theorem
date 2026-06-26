@@ -1,180 +1,169 @@
-# A Corner-Anchored 5-Piece Translation Dissection Proof of the Pythagorean Theorem
-## (Project 3 — dissection; honest verdict first)
+# A Non-Circular Trigonometric Proof of the Pythagorean Theorem
+## via the Angle-Bisector Half-Angle Tangents (Project 4)
 
 ---
 
 ## 0. VERDICT (read first)
 
-**DUPLICATE (family-level) — NOT addable.** The dissection below is **rigorous,
-direct, and fully verified**, but the collision gauntlet (`collisions.md`) shows it is
-a **member of the catalogued 2-parameter "superposition of two plane tessellations"
-family** documented on cut-the-knot (`DoublePythLattice.shtml`), which "furnishes a
-whole 2-parameter family of various dissections … Perigal's dissection … a special
-case." This dissection is the family member whose `c`-grid is **anchored at the
-right-angle vertex** (cutting *both* leg squares, 3+2), as opposed to Perigal's
-big-square-centred member (4+1). 
+**VARIANT — and, on the available evidence, very likely a DUPLICATE of
+Kise–Uehara–Shinzato 2025 (arXiv:2506.06304).** The proof below is **rigorous and
+genuinely non-circular** (full audit in §4), but its mechanism — the angle-bisector
+theorem → half-angle tangents `tan(A/2)=a/(b+c)` → `tan45°=1` — is exactly the
+angle-bisector / half-angle-tangent territory of KUS's proofs #2/#3. Search snippets
+associate `tan=a/(b+c)`, the angle bisector, and "`tan45°` with summed half-angles" with
+that paper, and its abstract confirms two angle-bisector proofs there.
 
-- **Closest catalogued proof:** Perigal's pinwheel (C2) — same family, same cut
-  directions (∥/⊥ to the hypotenuse), same motion (translation), same minimal count
-  (5). **Delta:** both squares cut (3+2) vs Perigal's (4 congruent + whole small
-  square); anchored at the right-angle vertex rather than the big square's centre.
-  Relative to the *classic Perigal* it is a **VARIANT**; relative to the *catalogued
-  2-parameter family* it is a **member = DUPLICATE**.
-- **Residual caveat (honest):** cut-the-knot pages were **unreachable** (gateway 403),
-  so the family description rests on a search snippet, not the page. But the snippet is
-  explicit that the family is 2-parameter with Perigal as a special case, which is
-  enough to make the duplicate call. The print catalog (full Loomis, Frederickson) was
-  not searchable either.
+- **Closest prior art:** **KUS 2025** (angle-bisector / tangent half-angle); also
+  **Luzia 2015** (half-angle, cosine version).
+- **Honest ceiling:** the only possible delta vs KUS is that this uses **no isosceles
+  construction** (it bisects *both* acute angles and uses `A/2+B/2=45°` directly). That
+  is too thin, and too likely covered by KUS #3 ("a novel relation from the
+  angle-bisector theorem, unifying"), to claim "addable."
+- **Residual caveat (mandatory):** I **could not read KUS, Luzia, or JJ in full** —
+  WebFetch returned **HTTP 403 on every domain** (arXiv, ar5iv, cut-the-knot, Wikipedia,
+  ResearchGate). So "duplicate" is an evidence-based inference, not a confirmed match;
+  and the print/full-text catalog was not searchable.
 
-The proof is presented in full anyway, because the *rigor* (airtight congruence +
-tiling for general `a,b`) is the part worth keeping; only the *novelty* fails.
-
----
-
-## 1. Axioms (the only facts a dissection proof may assume)
-
-- **(Ax1) Area additivity.** If a polygon is the union of finitely many polygons with
-  pairwise disjoint interiors, its area is the sum of their areas.
-- **(Ax2) Isometry-invariance of area.** Congruent polygons (related by a rigid motion)
-  have equal area. Here every motion is a **translation**.
-- **(Ax3) Area of a square.** A square with side length `ℓ` has area `ℓ²`.
-
-**No distance formula is assumed.** We treat `a, b, c` as the given side lengths of the
-right triangle's two legs and hypotenuse; we never compute `c` from `a, b`.
+The proof is given in full because the **circularity audit** (§4) is the real keeper —
+it is what separates a valid trig proof from a fake one — even though the **novelty
+fails**. Per the project's framing, an honest DUPLICATE/VARIANT verdict with sources is a
+valid deliverable.
 
 ---
 
-## 2. Configuration (coordinate model)
+## 1. Setup and accepted (non-circular) facts
 
-Right angle at the origin. Legs `a ≤ b`. Place:
+Right triangle `△ABC`, **right angle at `C`**. Sides: `a=BC` (opposite `A`),
+`b=CA` (opposite `B`), `c=AB` (hypotenuse). Angles `A=∠BAC`, `B=∠ABC`.
 
-- **Big leg square** `B0 = [0,b] × [0,b]` (side `b`, area `b²`).
-- **Small leg square** `S0 = [b, b+a] × [0, a]` (side `a`, area `a²`).
-- **Hypotenuse square** `C` = square with vertices `(0,0), (b,a), (b−a, a+b), (−a, b)`.
-  Its edges are the vectors `p=(b,a)` and `q=(−a,b)`; `q` is the `90°` rotation of `p`,
-  so `C` is a genuine square (four equal sides, right angles — by translation/rotation
-  congruence, **not** by any length formula), with side equal to the hypotenuse, hence
-  area `c²` by (Ax3).
+Accepted facts, each with a derivation that does **not** assume `a²+b²=c²`:
 
-Let `x0 = (a²−ab+b²)/b` and `x1 = (a²+b²)/b`. Since `a ≤ b`, one checks
-`0 < x0 ≤ b` and `b ≤ x1 ≤ b+a` (equalities only at `a=b`), so all points below lie in
-the stated squares.
+- **(F1) Angle sum.** `A+B+C=180°`, `C=90°` ⟹ `A+B=90°`. *(Euclidean angle sum.)*
+- **(F2) Ratio definitions.** In a right triangle, `tanθ = opposite/adjacent`
+  (from similarity of right triangles — independent of Pythagoras).
+- **(F3) Angle-bisector theorem.** A bisector from a vertex divides the opposite side in
+  the ratio of the two adjacent sides. *(Proof: the two sub-triangles share the altitude
+  from that vertex, so their areas — hence their bases — are in the ratio of the adjacent
+  sides; equivalently the area form of the Law of Sines. No Pythagoras.)*
+- **(F4) Tangent addition.** `tan(x+y) = (tan x + tan y)/(1 − tan x · tan y)`. *(From the
+  area/projection proofs of the sine and cosine addition formulas — neither of which uses
+  `sin²+cos²=1` — followed by `tan=sin/cos`; the `cos x cos y` cancels.)*
+- **(F5) `tan 45° = 1`.** In a 45–45–90 isosceles right triangle the two **legs are
+  equal**; `tan45° = opposite/adjacent = leg/leg = 1`. **This uses only equality of the
+  legs, never the hypotenuse**, so it is non-circular. *(Crucial: `sin45°=leg/hyp` would
+  need `hyp=leg√2`, i.e. Pythagoras — forbidden. `tan45°` dodges this.)*
 
----
-
-## 3. The five pieces and their isometries (all translations)
-
-| # | source square | source vertices | translation `t` | target vertices `= source + t` |
-|---|---|---|---|---|
-| P0 | `B0` | (0,0),(0,b),(x0,b),(b,a) | (0, 0) | (0,0),(0,b),(x0,b),(b,a) |
-| P1 | `B0` | (0,0),(b,0),(b,a) | (−a, b) | (−a,b),(b−a,b),(b−a,a+b) |
-| P2 | `B0` | (b,a),(x0,b),(b,b) | (−b, −a) | (0,0),(x0−b,b−a),(0,b−a) |
-| P3 | `S0` | (b,a),(b+a,a),(b+a,0),(x1,0) | (−(a+b), b−a) | (−a,b),(0,b),(0,b−a),(x1−a−b,b−a) |
-| P4 | `S0` | (x1,0),(b,0),(b,a) | (−a, b) | (x1−a,b),(b−a,b),(b−a,a+b) |
-
-**Congruence (Ax2).** Each isometry is the **pure translation** `v ↦ v + t` (rotation
-part = identity matrix `I`). A translation is a rigid motion, so each target piece is
-congruent to its source piece. The table's right column is obtained by adding `t` to
-each source vertex; `verify/verify_dissection.py` checks vertex-set equality exactly
-(0 mismatches) for many `a,b`. Because the maps are translations, **no piece is
-reflected or rotated** — the dissection is **translation-only**.
+**Forbidden and unused:** `sin²+cos²=1`, the unit-circle definition, `√(x²+y²)`, the law
+of cosines.
 
 ---
 
-## 4. Exact tiling — no gaps, no overlaps
+## 2. The key lemma (half-angle tangent from the bisector)
 
-### 4a. Source pieces partition the two leg squares
-- **Big square `B0`.** P1 is the triangle below the segment `(0,0)→(b,a)` (which runs
-  from the corner `(0,0)` to the point `(b,a)` on the right edge, direction `p`,
-  parallel to the hypotenuse). Above that segment, the remaining region of `B0` is split
-  by the segment `(b,a)→(x0,b)` (direction `q`, perpendicular to the hypotenuse) into
-  the quadrilateral P0 and the small corner triangle P2 at `(b,b)`. The three interiors
-  are pairwise disjoint and `P0 ∪ P1 ∪ P2 = B0`. Areas:
-  `|P1|=½ab`, `|P2|=a(b−a)²/(2b)`, `|P0| = b² − ½ab − a(b−a)²/(2b)`; sum `= b²`. ✓
-- **Small square `S0`.** The single segment `(b,a)→(x1,0)` (direction `(a,−b)`,
-  perpendicular to the hypotenuse) splits `S0` into the quadrilateral P3 and the
-  triangle P4. `|P4| = a³/(2b)`, `|P3| = a² − a³/(2b)`; sum `= a²`. ✓
-- Hence the five source interiors are pairwise disjoint and their union is
-  `B0 ∪ S0` (the two leg squares), with total area `a²+b²` by (Ax1).
+**Lemma.** `tan(A/2) = a/(b+c)` and, symmetrically, `tan(B/2) = b/(a+c)`.
 
-### 4b. Target pieces partition the hypotenuse square
-Translating each piece by its `t` gives five polygons inside `C` (vertices in the
-table's last column lie on `C`'s lattice of cut lines). `verify/verify_dissection.py`
-confirms, for every tested `a,b`: pairwise interior intersection area `= 0`, and the
-union equals `C` exactly (symmetric-difference area `< 10⁻¹⁴`). So the five target
-interiors are pairwise disjoint and tile `C`, with total area `c²`.
-
-### 4c. Shared-edge matching (why the cuts fit)
-The cut directions are exactly `p` (∥ hypotenuse) and `q` (⊥ hypotenuse). Each internal
-edge produced in a leg square is a translate, by the corresponding `t`, of an edge of
-the hypotenuse-square tiling; opposite pieces share that edge with matching endpoints
-(verified by the vertex-equality check). This is the standard reason a
-tessellation-overlay dissection closes up: both the leg-square tiling and the
-`c`-square carry the **same translation lattice** `Λ = ⟨p, q⟩`, so a piece removed from
-one fundamental domain fits exactly into the other.
-
----
-
-## 5. Conclusion (the theorem)
-
-By (Ax1) applied in `C` and in `B0 ∪ S0`, and (Ax2) (each piece moves by a translation,
-preserving area):
+*Proof of the first (see figure).* Bisect angle `A`; let the bisector meet the opposite
+side `BC` at `D`. By the angle-bisector theorem (F3),
 ```
-area(C) = Σ area(target pieces) = Σ area(source pieces) = area(B0) + area(S0).
+BD/DC = AB/AC = c/b,   and   BD + DC = BC = a,   so   DC = a·b/(b+c).
 ```
-By (Ax3), `area(C)=c²`, `area(B0)=b²`, `area(S0)=a²`. Therefore
+The bisector splits `A` into two equal parts, so `∠CAD = A/2`. In triangle `ACD` the
+angle at `C` is the original right angle, so `ACD` is right-angled at `C`; by the ratio
+definition (F2),
 ```
-            c² = a² + b².    ∎
+tan(A/2) = tan(∠CAD) = (opposite)/(adjacent) = DC/CA = (a·b/(b+c))/b = a/(b+c).
 ```
-The `3,4,5` instance (figure `verify/dissection.svg`) is illustration only; §3–§4 hold
-for all `a ≤ b` (and degenerate to a 4-piece dissection when `a=b`, as P2 vanishes).
+The second identity follows by swapping the roles of `A,B` and `a,b` (bisect `B`, meet
+`CA` at `E`, `CE = a·b/(a+c)`, `tan(B/2)=CE/CB=b/(a+c)`). ∎
+
+Neither step used `sin²+cos²=1`.
 
 ---
 
-## 6. Figure
+## 3. The proof
 
-`verify/dissection.svg` draws both configurations (left: the two leg squares cut into
-the 5 colored pieces; right: the tilted hypotenuse square tiled by the same 5 pieces,
-matching colors). Schematic (`a=3,b=4`):
+By (F1), `A+B=90°`, hence `A/2 + B/2 = 45°`. Apply the tangent addition formula (F4) and
+`tan45°=1` (F5):
+```
+1 = tan 45° = tan(A/2 + B/2) = ( tan(A/2) + tan(B/2) ) / ( 1 − tan(A/2)·tan(B/2) ).
+```
+Substitute the Lemma `tan(A/2)=a/(b+c)`, `tan(B/2)=b/(a+c)`. Clearing denominators (full
+algebra in `verify/trig_check.py`) yields the clean identity
+```
+tan(A/2 + B/2) − 1  =  (a² + b² − c²) / ( c·(a + b + c) ).
+```
+The left side is `0` (it equals `tan45° − 1 = 0`). Since `c·(a+b+c) > 0`, the right side
+is `0` only if its numerator vanishes:
+```
+a² + b² − c² = 0,    i.e.    a² + b² = c².    ∎
+```
+
+**Equivalent one-bisector form.** Since `B/2 = 45° − A/2`, the tangent subtraction
+formula with `tan45°=1` gives `tan(B/2) = (1 − tan(A/2))/(1 + tan(A/2))`. Equating to
+`b/(a+c)`: `b/(a+c) = (b+c−a)/(b+c+a)`; cross-multiplying gives `b(a+b+c)=(a+c)(b+c−a)`,
+which simplifies to `b² = c² − a²`. (SymPy confirms the numerator of the difference is
+exactly `a²+b²−c²`.)
+
+---
+
+## 4. Circularity audit (the spine)
+
+| Fact used | Where | Non-circular source | Uses `sin²+cos²=1`? |
+|---|---|---|---|
+| `A+B=90°` | §3 | angle sum of a triangle (F1) | No |
+| `tanθ=opp/adj` | §2 | similar right triangles (F2) | No |
+| angle-bisector theorem | §2 | equal-altitude area ratio (F3) | No |
+| `tan(A/2)=a/(b+c)` | §2 | F2+F3 + algebra | No |
+| tangent addition | §3 | area/projection addition formulas (F4) | No |
+| `tan45°=1` | §3 | leg/leg in a 45–45–90 triangle (F5) — **not** leg/hyp | No |
+| `a²+b²=c²` | §3 | rational identity, SymPy-verified | (the conclusion) |
+
+**No step assumes the Pythagorean theorem or `sin²+cos²=1`.** The sharp point: every
+"special-angle value" used is `tan45°=1`, which depends only on two equal legs — never a
+hypotenuse length — so the usual hidden circularity (`sin45°=1/√2`, `cos45°=1/√2`,
+`1/(1+t²)` half-angle factors) is avoided. **Core: (C)/trig, non-circular.**
+
+---
+
+## 5. Figure
 
 ```
- LEG SQUARES (cut)                         HYP SQUARE (tiled, tilted)
-   (0,b)___________(x0,b)(b,b)                        (b-a,a+b)
-    |  P0        /  \P2|                                /\
-    |          /     \ |                               /  \
-    |        /  (b,a) \|(b,a)___(b+a,a)              /P1  \
-    |      /      |  P3|        |                  /  P4   \
-    |   /   P1    | P4 |        |               (-a,b)......(b,a)
-    | /          |     |        |                  \  P0   /
- (0,0)__________(b,0) (x1,0)__(b+a,0)               \     /
-                                                      \  /
-   cuts: (0,0)->(b,a) [∥ hyp],                         \/
-         (b,a)->(x0,b) [⊥ hyp],                      (0,0)
-         (b,a)->(x1,0) [⊥ hyp]
+                 A
+                 |\
+                 | \                 Bisector AD of angle A meets BC at D.
+   b = CA        |  \   c = AB       ∠CAD = A/2 ;  △ACD is right-angled at C.
+   (adj to A)    |   \               tan(A/2) = DC/CA = a/(b+c).
+                 |    \
+                 |     \             Symmetrically, bisecting B gives
+                 |  A/2 \            tan(B/2) = b/(a+c).
+                 |______'\           A/2 + B/2 = 45°, tan45° = 1
+                 C   D    B          ⇒ tan(A/2+B/2)=1 ⇒ a²+b²=c².
+                  a = CB
+
+      (right angle ⌐ at C)   D lies on CB with  CD = ab/(b+c),  DB = ac/(b+c).
 ```
 
 ---
 
-## 7. Circularity audit
+## 6. Verification (Phase 5 — actually run)
 
-| Fact used | Where | Independent of `a²+b²=c²`? |
-|---|---|---|
-| Area additive over disjoint union | §4,§5 (Ax1) | Yes — a measure axiom. |
-| Translations preserve area | §3,§5 (Ax2) | Yes — congruence/measure axiom. |
-| Area of a square = side² | §5 (Ax3) | Yes — definition of area for squares. |
-| `C` is a square with side = hypotenuse | §2 | From `q` = 90°-rotation of `p` (an isometry); **no length formula** — we never assert `|p|=√(a²+b²)`, only that the four sides are congruent and the side equals the hypotenuse. |
-| Pieces tile both regions | §4 | Combinatorial/coordinate verification; uses only incidence of cut lines, not distances. |
+`verify/trig_check.py` (SymPy + numeric) was executed; real output is in
+`verify/README.md`. It confirms the **algebra**: `tan(A/2+B/2)−1` simplifies *exactly* to
+`(a²+b²−c²)/(c(a+b+c))` (difference from the claimed value `= 0`); the one-bisector form's
+numerator factors as `a²+b²−c²`; the half-angle relation is consistent with the ratio
+defs; and numerically `tan(A/2+B/2)=1` to `<10⁻¹²` on six right triangles.
 
-**No step computes `c` from `a,b` or uses `√(x²+y²)`.** The theorem emerges as an
-**area** identity among the three squares, converted to `c²=a²+b²` only by (Ax3). Core:
-**(A) area**, as every dissection proof must be — not dressed up as anything else.
+**Caveat (stated in the script):** SymPy *knows* `sin²+cos²=1`, so this check certifies
+only the algebra — **not** non-circularity. Non-circularity rests on §4, not on SymPy.
 
 ---
 
-## 8. Honest novelty statement
+## 7. Honest novelty statement
 
-This is a **rigorous, direct, translation-only** dissection, distinct **from the
-classic Perigal cut** (it cuts both squares, 3+2, anchored at the right-angle vertex).
-But it is a **member of the catalogued 2-parameter tessellation-superposition family**
-(`DoublePythLattice`), so it is **DUPLICATE (family-level) — not addable**. See
-`NOVELTY.md` for the ledger and the referee pass (which the referee wins).
+Rigorous and non-circular — but its mechanism is the angle-bisector / half-angle-tangent
+route that **KUS 2025 already developed** (their proofs #2/#3), and the search evidence
+points at an essentially identical construction (`tan(half)=a/(b+c)`, `tan45°`, summed
+half-angles). **Verdict: VARIANT, very likely DUPLICATE of KUS 2025; not addable.** The
+inability to read the 2025 paper (WebFetch 403) leaves a thin, honestly-stated margin of
+doubt, but not enough to claim novelty. See `NOVELTY.md` for the ledger and the referee
+pass (which the referee wins).
